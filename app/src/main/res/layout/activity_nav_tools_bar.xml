@@ -9,7 +9,7 @@
     <LinearLayout
         android:id="@+id/ll_tools_bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="36dp"
         android:background="@color/colorPrimaryDark"
         android:orientation="horizontal">
         <TextView
@@ -20,6 +20,7 @@
             android:gravity="center"
             android:text="标题"
             android:textColor="#fff"
+            android:textSize="15sp"
             />
     </LinearLayout>
 

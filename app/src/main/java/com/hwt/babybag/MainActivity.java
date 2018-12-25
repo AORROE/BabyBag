@@ -1,19 +1,35 @@
 package com.hwt.babybag;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.hwt.babybag.ui.frag.BabyFrag;
+import com.hwt.babybag.ui.frag.MineFrag;
+import com.hwt.babybag.ui.frag.MissionFrag;
+import com.hwt.babybag.ui.frag.VideoFrag;
+
+import butterknife.BindView;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private FrameLayout bodyLayout;
 
     private LinearLayout bottomBar;
+
+    private Fragment babyFrag;
+    private Fragment missionFrag;
+    private Fragment videoFrag;
+    private Fragment mineFrag;
 
     //底部按钮
     private View childInfoTab;
@@ -62,7 +78,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 获取界面上的UI控件
      */
     private void init() {
-        bodyLayout = findViewById(R.id.fl_main_body);
         bottomBar = findViewById(R.id.ll_bottomNav);
         tv_main_title = findViewById(R.id.tv_title_bar);
         tv_main_title.setText("首页");
@@ -136,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (i){
             case 0:
                 childInfoTab.setSelected(true);
-                iv_baby.setImageResource(R.drawable.ic_launcher_background);
+                iv_baby.setImageResource(R.drawable.icon_baby_select);
                 tv_baby.setTextColor(Color.parseColor("#008577"));
                 ll_tools_bar_layout.setVisibility(View.VISIBLE);
                 tv_main_title.setText("首页");
@@ -150,14 +165,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case 2:
                 videoTab.setSelected(true);
-                iv_video.setImageResource(R.drawable.ic_launcher_background);
+                iv_video.setImageResource(R.drawable.icon_video_select);
                 tv_video.setTextColor(Color.parseColor("#008577"));
                 ll_tools_bar_layout.setVisibility(View.VISIBLE);
                 tv_main_title.setText("视频");
                 break;
             case 3:
                 mineTab.setSelected(true);
-                iv_mine.setImageResource(R.drawable.ic_launcher_background);
+                iv_mine.setImageResource(R.drawable.icon_mine_select);
                 tv_mine.setTextColor(Color.parseColor("#008577"));
                 ll_tools_bar_layout.setVisibility(View.VISIBLE);
                 tv_main_title.setText("我的");
@@ -169,32 +184,51 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * @param viewIndex
      */
     private void createView(int viewIndex) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         switch (viewIndex){
             case 0:
                 //首页界面
+                Log.i("TAG", "createView: ");
+                if(babyFrag == null){
+                    babyFrag = new BabyFrag();
+                }
+                transaction.replace(R.id.fl_main_body,babyFrag);
                 break;
             case 1:
                 //任务卡界面
+                if(missionFrag == null){
+                    missionFrag = new MissionFrag();
+                }
+                transaction.replace(R.id.fl_main_body,missionFrag);
                 break;
             case 2:
                 //视频界面
+                if(videoFrag == null){
+                    videoFrag = new VideoFrag();
+                }
+                transaction.replace(R.id.fl_main_body,videoFrag);
                 break;
             case 3:
                 //个人中心界面
+                if(mineFrag == null){
+                    mineFrag = new MineFrag();
+                }
+                transaction.replace(R.id.fl_main_body,mineFrag);
                 break;
         }
+        transaction.commit();
     }
 
     /**
      * 清除底部按钮的选中状态
      */
     private void clearBottomImageState() {
-        tv_baby.setTextColor(Color.parseColor("#303030"));
-        tv_mission.setTextColor(Color.parseColor("#303030"));
-        tv_video.setTextColor(Color.parseColor("#303030"));
-        tv_mine.setTextColor(Color.parseColor("#303030"));
+        tv_baby.setTextColor(Color.parseColor("#bfbfbf"));
+        tv_mission.setTextColor(Color.parseColor("#bfbfbf"));
+        tv_video.setTextColor(Color.parseColor("#bfbfbf"));
+        tv_mine.setTextColor(Color.parseColor("#bfbfbf"));
 
-        iv_baby.setImageResource(R.drawable.icon_home);
+        iv_baby.setImageResource(R.drawable.icon_baby);
         iv_mission.setImageResource(R.drawable.icon_mission);
         iv_video.setImageResource(R.drawable.icon_video);
         iv_mine.setImageResource(R.drawable.icon_mine);

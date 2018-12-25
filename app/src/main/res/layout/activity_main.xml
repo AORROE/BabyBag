@@ -20,7 +20,8 @@
         <FrameLayout
             android:id="@+id/fl_main_body"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
+
         </FrameLayout>
 
     </LinearLayout>
@@ -59,7 +60,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="3dp"
-                android:src="@drawable/icon_home" />
+                android:src="@drawable/icon_baby" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -132,7 +133,7 @@
                 android:layout_marginBottom="3dp"
                 android:gravity="center"
                 android:singleLine="true"
-                android:text="@string/bottom_mission_tab"
+                android:text="@string/bottom_mine_tab"
                 android:textColor="#666666"
                 android:textSize="14sp" />
             <ImageView

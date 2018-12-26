@@ -1,8 +1,16 @@
 <resources>
     <string name="app_name">BabyBag</string>
+    <string name="nav_user_name">ARROW</string>
+    <string name="nav_relationship">爸爸</string>
     <string name="bottom_childInfo_tab">首页</string>
     <string name="bottom_mission_tab">任务卡</string>
     <string name="bottom_video_tab">视频</string>
     <string name="bottom_live_tab">直播</string>
     <string name="bottom_mine_tab">我的</string>
+    <!--侧滑item-->
+    <string name="nav_person_info">个人信息</string>
+    <string name="nav_change_password">修改密码</string>
+    <string name="nav_child_info">孩子信息</string>
+    <string name="nav_open_live">开启直播</string>
+    <string name="nav_login_out">退出登录</string>
 </resources>

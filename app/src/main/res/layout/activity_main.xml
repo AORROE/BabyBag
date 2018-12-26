@@ -1,152 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rl_main_layout"
+    android:id="@+id/dl_main"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
-
-    <LinearLayout
-        android:id="@+id/ll_main_layout"
-        android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    tools:openDrawer="start"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="false"
+    >
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/rl_main_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
 
-        <!-- 放入标题栏 -->
-        <include layout="@layout/activity_nav_tools_bar"/>
-        <FrameLayout
-            android:id="@+id/fl_main_body"
+        <LinearLayout
+            android:id="@+id/ll_main_layout"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        </FrameLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_bottomNav"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:background="@color/bottom_navBg_color"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
-
-        <RelativeLayout
-            android:id="@+id/rl_childInfoTab"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/bottom_bar_baby"
+            <!-- 放入标题栏 -->
+            <include layout="@layout/activity_nav_tools_bar"/>
+            <FrameLayout
+                android:id="@+id/fl_main_body"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="3dp"
-                android:gravity="center"
-                android:singleLine="true"
-                android:text="@string/bottom_childInfo_tab"
-                android:textColor="#666666"
-                android:textSize="14sp" />
-            <ImageView
-                android:id="@+id/bottom_bar_babyImg"
-                android:layout_width="27dp"
-                android:layout_height="27dp"
-                android:layout_above="@id/bottom_bar_baby"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="3dp"
-                android:src="@drawable/icon_baby" />
-        </RelativeLayout>
+                android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:id="@+id/rl_missionTab"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/bottom_bar_mission"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="3dp"
-                android:gravity="center"
-                android:singleLine="true"
-                android:text="@string/bottom_mission_tab"
-                android:textColor="#666666"
-                android:textSize="14sp" />
-            <ImageView
-                android:id="@+id/bottom_bar_missionImg"
-                android:layout_width="27dp"
-                android:layout_height="27dp"
-                android:layout_above="@id/bottom_bar_mission"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="3dp"
-                android:src="@drawable/icon_mission" />
-        </RelativeLayout>
+            </FrameLayout>
 
-        <RelativeLayout
-            android:id="@+id/rl_videoTab"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/bottom_bar_video"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="3dp"
-                android:gravity="center"
-                android:singleLine="true"
-                android:text="@string/bottom_video_tab"
-                android:textColor="#666666"
-                android:textSize="14sp" />
-            <ImageView
-                android:id="@+id/bottom_bar_videoImg"
-                android:layout_width="27dp"
-                android:layout_height="27dp"
-                android:layout_above="@id/bottom_bar_video"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="3dp"
-                android:src="@drawable/icon_video" />
-        </RelativeLayout>
+        </LinearLayout>
 
-        <RelativeLayout
-            android:id="@+id/rl_mineTab"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/bottom_bar_mine"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="3dp"
-                android:gravity="center"
-                android:singleLine="true"
-                android:text="@string/bottom_mine_tab"
-                android:textColor="#666666"
-                android:textSize="14sp" />
-            <ImageView
-                android:id="@+id/bottom_bar_mineImg"
-                android:layout_width="27dp"
-                android:layout_height="27dp"
-                android:layout_above="@id/bottom_bar_mine"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="3dp"
-                android:src="@drawable/icon_mine" />
-        </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/ll_bottomNav"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@color/bottom_navBg_color"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
 
-    </LinearLayout>
+            <RelativeLayout
+                android:id="@+id/rl_childInfoTab"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
 
-</RelativeLayout>
+                <TextView
+                    android:id="@+id/bottom_bar_baby"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="3dp"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="@string/bottom_childInfo_tab"
+                    android:textColor="#666666"
+                    android:textSize="14sp" />
+                <ImageView
+                    android:id="@+id/bottom_bar_babyImg"
+                    android:layout_width="27dp"
+                    android:layout_height="27dp"
+                    android:layout_above="@id/bottom_bar_baby"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="3dp"
+                    android:src="@drawable/icon_baby" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_missionTab"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/bottom_bar_mission"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="3dp"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="@string/bottom_mission_tab"
+                    android:textColor="#666666"
+                    android:textSize="14sp" />
+                <ImageView
+                    android:id="@+id/bottom_bar_missionImg"
+                    android:layout_width="27dp"
+                    android:layout_height="27dp"
+                    android:layout_above="@id/bottom_bar_mission"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="3dp"
+                    android:src="@drawable/icon_mission" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_videoTab"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/bottom_bar_video"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="3dp"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="@string/bottom_video_tab"
+                    android:textColor="#666666"
+                    android:textSize="14sp" />
+                <ImageView
+                    android:id="@+id/bottom_bar_videoImg"
+                    android:layout_width="27dp"
+                    android:layout_height="27dp"
+                    android:layout_above="@id/bottom_bar_video"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="3dp"
+                    android:src="@drawable/icon_video" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_mineTab"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/bottom_bar_mine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="3dp"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="@string/bottom_mine_tab"
+                    android:textColor="#666666"
+                    android:textSize="14sp" />
+                <ImageView
+                    android:id="@+id/bottom_bar_mineImg"
+                    android:layout_width="27dp"
+                    android:layout_height="27dp"
+                    android:layout_above="@id/bottom_bar_mine"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="3dp"
+                    android:src="@drawable/icon_mine" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_view_header"
+        app:menu="@menu/nav_item">
+    </android.support.design.widget.NavigationView>
+</android.support.v4.widget.DrawerLayout>

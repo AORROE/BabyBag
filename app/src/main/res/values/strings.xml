@@ -13,4 +13,13 @@
     <string name="nav_child_info">孩子信息</string>
     <string name="nav_open_live">开启直播</string>
     <string name="nav_login_out">退出登录</string>
+
+    <string name="login_text">登录</string>
+    <string name="Username">用户名</string>
+    <string name="Password">密码</string>
+    <string name="Login_btn">登录</string>
+    <string name="login_success">登录成功</string>
+    <string name="register">注册</string>
+    <string name="repeat_password">确认密码</string>
+    <string name="next">注册</string>
 </resources>

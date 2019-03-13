@@ -49,22 +49,22 @@ public class LoginAct extends AppCompatActivity {
     @OnClick({R.id.login_gologin,R.id.login_fab})
     public void onClick(View view){
         switch (view.getId()){
-            case R.id.login_gologin:
+            case R.id.login_fab:
                 getWindow().setExitTransition(null);
                 getWindow().setEnterTransition(null);
 
                 ActivityOptions options =
                         ActivityOptions.makeSceneTransitionAnimation(this,fab,fab.getTransitionName());
-                startActivity(new Intent(this, MainActivity.class),options.toBundle());
-                this.finish();
+                startActivity(new Intent(this, RegisterAct.class),options.toBundle());
+//                this.finish();
                 break;
-            case R.id.login_fab:
+            case R.id.login_gologin:
                 Explode explode = new Explode();
                 explode.setDuration(500);
-                getWindow().setExitTransition(explode);
-                getWindow().setEnterTransition(explode);
+                getWindow().setExitTransition(null);
+                getWindow().setEnterTransition(null);
                 ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(this);
-                Intent i2 = new Intent(this,RegisterAct.class);
+                Intent i2 = new Intent(this,MainActivity.class);
                 startActivity(i2, oc2.toBundle());
                 break;
         }

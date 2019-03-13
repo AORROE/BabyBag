@@ -12,6 +12,7 @@ import android.transition.TransitionInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateInterpolator;
+import android.widget.Button;
 
 import com.hwt.babybag.R;
 
@@ -23,6 +24,8 @@ public class RegisterAct extends AppCompatActivity {
     FloatingActionButton fab;
     @BindView(R.id.register_cv)
     CardView cvAdd;
+    @BindView(R.id.register_go)
+    Button register_btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +36,12 @@ public class RegisterAct extends AppCompatActivity {
             ShowEnterAnimation();
         }
         fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                animateRevealClose();
+            }
+        });
+        register_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 animateRevealClose();

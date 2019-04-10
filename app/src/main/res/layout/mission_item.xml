@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <android.support.v7.widget.CardView
+        android:id="@+id/baby_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        app:cardCornerRadius="10dp"
+        app:contentPadding="12dp">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.hwt.babybag.view.CircleImageVIew
+                    android:id="@+id/user_header"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:is_circle="true"
+                    android:src="@drawable/icon_zhangweitu"/>
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_centerInParent="true"
+                    android:layout_toRightOf="@+id/user_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:textSize="@dimen/text_size"
+                    android:textColor="@color/text_color"
+                    android:text="何老师"/>
+
+                <TextView
+                    android:id="@+id/add_time"
+                    android:layout_centerInParent="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size"
+                    android:textColor="#999999"
+                    android:text="2019-03-01 18:00"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size"
+                    android:textColor="@color/text_color"
+                    android:layout_centerInParent="true"
+                    android:layout_alignParentLeft="true"
+                    android:text="任务内容:"/>
+
+                <Button
+                    android:id="@+id/complete"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:textColor="#ffffff"
+                    android:background="@drawable/complete_shap"
+                    android:textSize="@dimen/text_size"
+                    android:layout_alignParentRight="true"
+                    android:text="完成"/>
+            </RelativeLayout>
+            <TextView
+                android:id="@+id/mission_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size"
+                android:textColor="@color/text_color"
+                android:text="暗杀计划卡是"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp">
+                <ImageView
+                    android:id="@+id/icon_praise"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:clickable="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@mipmap/icon_zan"/>
+            </RelativeLayout>
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>

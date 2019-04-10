@@ -6,7 +6,7 @@
     <string name="bottom_mission_tab">任务卡</string>
     <string name="bottom_video_tab">视频</string>
     <string name="bottom_live_tab">直播</string>
-    <string name="bottom_mine_tab">我的</string>
+    <string name="bottom_mine_tab">发现</string>
     <!--侧滑item-->
     <string name="nav_person_info">个人信息</string>
     <string name="nav_change_password">修改密码</string>
@@ -22,4 +22,15 @@
     <string name="register">注册</string>
     <string name="repeat_password">确认密码</string>
     <string name="next">注册</string>
+
+    <string name="child_name">姓名：</string>
+    <string name="child_age">年龄：</string>
+    <string name="child_class">班级：</string>
+    <string name="child_introduce">介绍：</string>
+    <string name="child_change">切换</string>
+
+    <string name="baby_ability">能力发展</string>
+    <string name="baby_study">学习性格</string>
+    <string name="baby_recommend">推荐</string>
+    <string name="no_data_text">没有数据哟~~</string>
 </resources>

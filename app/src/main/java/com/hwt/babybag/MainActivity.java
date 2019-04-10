@@ -1,14 +1,15 @@
 package com.hwt.babybag;
 
-import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.transition.Explode;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -17,18 +18,23 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.hwt.babybag.ui.act.LoginAct;
 import com.hwt.babybag.ui.frag.BabyFrag;
 import com.hwt.babybag.ui.frag.MineFrag;
 import com.hwt.babybag.ui.frag.MissionFrag;
 import com.hwt.babybag.ui.frag.VideoFrag;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private FrameLayout bodyLayout;
-
-    private LinearLayout bottomBar;
+    @BindView(R.id.dl_main)
+    public DrawerLayout drawerLayout;
+    @BindView(R.id.fl_main_body)
+    public FrameLayout bodyLayout;
+    @BindView(R.id.ll_bottomNav)
+    public LinearLayout bottomBar;
 
     private Fragment babyFrag;
     private Fragment missionFrag;
@@ -36,69 +42,66 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Fragment mineFrag;
 
     //底部按钮
-    private View childInfoTab;
-    private View missionTab;
-    private View videoTab;
-    private View mineTab;
-    private TextView tv_baby;
-    private TextView tv_mission;
-    private TextView tv_video;
-    private TextView tv_mine;
-    private ImageView iv_baby;
-    private ImageView iv_mission;
-    private ImageView iv_video;
-    private ImageView iv_mine;
+    @BindView(R.id.rl_childInfoTab)
+    public View childInfoTab;
+    @BindView(R.id.rl_missionTab)
+    public View missionTab;
+    @BindView(R.id.rl_videoTab)
+    public View videoTab;
+    @BindView(R.id.rl_mineTab)
+    public View mineTab;
+    @BindView(R.id.bottom_bar_baby)
+    public TextView tv_baby;
+    @BindView(R.id.bottom_bar_mission)
+    public TextView tv_mission;
+    @BindView(R.id.bottom_bar_video)
+    public TextView tv_video;
+    @BindView(R.id.bottom_bar_mine)
+    public TextView tv_mine;
+    @BindView(R.id.bottom_bar_babyImg)
+    public ImageView iv_baby;
+    @BindView(R.id.bottom_bar_missionImg)
+    public ImageView iv_mission;
+    @BindView(R.id.bottom_bar_videoImg)
+    public ImageView iv_video;
+    @BindView(R.id.bottom_bar_mineImg)
+    public ImageView iv_mine;
+    @BindView(R.id.toolsbar_menu)
+    public ImageView icon_menu;
 
     //标题栏
-    private TextView tv_main_title;
-    private LinearLayout ll_tools_bar_layout;
+    @BindView(R.id.tv_title_bar)
+    public TextView tv_main_title;
+    @BindView(R.id.ll_tools_bar_layout)
+    public LinearLayout ll_tools_bar_layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Explode explode = new Explode();
-        explode.setDuration(500);
-        getWindow().setExitTransition(explode);
-        getWindow().setEnterTransition(explode);
+        ButterKnife.bind(this);
+//        Explode explode = new Explode();
+//        explode.setDuration(500);
+//        getWindow().setExitTransition(explode);
+//        getWindow().setEnterTransition(explode);
         setHalfTransparent();
         setStatusBarFullTransparent();
         init();
-        initBottomBar();
         setListener();
         setInitStatus();
-
+        icon_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(Gravity.LEFT);
+            }
+        });
     }
 
-    private void initBottomBar(){
-        childInfoTab = findViewById(R.id.rl_childInfoTab);
-        missionTab = findViewById(R.id.rl_missionTab);
-        videoTab = findViewById(R.id.rl_videoTab);
-        mineTab = findViewById(R.id.rl_mineTab);
-        tv_baby = findViewById(R.id.bottom_bar_baby);
-        tv_mission = findViewById(R.id.bottom_bar_mission);
-        tv_video = findViewById(R.id.bottom_bar_video);
-        tv_mine = findViewById(R.id.bottom_bar_mine);
-        iv_baby = findViewById(R.id.bottom_bar_babyImg);
-        iv_mission = findViewById(R.id.bottom_bar_missionImg);
-        iv_video = findViewById(R.id.bottom_bar_videoImg);
-        iv_mine = findViewById(R.id.bottom_bar_mineImg);
-    }
     /**
      * 获取界面上的UI控件
      */
     private void init() {
-        bottomBar = findViewById(R.id.ll_bottomNav);
-        tv_main_title = findViewById(R.id.tv_title_bar);
         tv_main_title.setText("首页");
-        ll_tools_bar_layout = findViewById(R.id.ll_tools_bar_layout);
-        initBodyLayout();
-    }
-    /**
-     * 界面内容
-     */
-    private void initBodyLayout() {
-        bodyLayout = findViewById(R.id.fl_main_body);
     }
 
     /**
@@ -185,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 iv_mine.setImageResource(R.drawable.icon_mine_select);
                 tv_mine.setTextColor(Color.parseColor("#008577"));
                 ll_tools_bar_layout.setVisibility(View.VISIBLE);
-                tv_main_title.setText("我的");
+                tv_main_title.setText("发现");
                 break;
         }
     }

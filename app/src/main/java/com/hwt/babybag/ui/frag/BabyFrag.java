@@ -1,6 +1,5 @@
 package com.hwt.babybag.ui.frag;
 
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,12 +13,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.hwt.babybag.R;
-import com.hwt.babybag.adapter.RVAdapter;
-import com.hwt.babybag.test.ChildInfoItem;
-import com.hwt.babybag.test.Item;
-import com.hwt.babybag.test.MainAbilityItem;
-import com.hwt.babybag.test.MultiRVAdapter;
-import com.hwt.babybag.test.RecommendVideoItem;
+import com.hwt.babybag.adapter.VideoAdapter;
+import com.hwt.babybag.adapter.VideoItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,9 +28,8 @@ public class BabyFrag extends Fragment {
 
     private RecyclerView rv_video;
     private LinearLayout ll_noData;
-    private String[] videoContent = {"学前1班","学前2班","学前3班","学前4班"};
-    private List<String> dataList;
-    private RVAdapter adapter;
+    private List<VideoItem> list;
+    private VideoAdapter myAdapter;
 
     @Nullable
     @Override
@@ -44,11 +38,10 @@ public class BabyFrag extends Fragment {
         rv_video = view.findViewById(R.id.baby_rv);
         ll_noData = view.findViewById(R.id.ll_no_data_view);
         initData();
-        adapter = new RVAdapter(view.getContext(),dataList);
+        myAdapter = new VideoAdapter(R.layout.baby_recommend_list_item,list);
         GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(),2);
-
         rv_video.setLayoutManager(layoutManager);
-        rv_video.setAdapter(adapter);
+        rv_video.setAdapter(myAdapter);
         return view;
     }
 
@@ -56,13 +49,29 @@ public class BabyFrag extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
+    /**
+     * 添加数据源
+     */
     private void initData(){
-        dataList = new ArrayList<>();
-        for (int i = 0; i < videoContent.length; i++){
-            dataList.add(videoContent[i]);
-        }
-        if(dataList.size() == 0){
+        list = new ArrayList<>();
+        list.add(new VideoItem(
+                BitmapFactory.decodeResource(getResources(),R.drawable.icon_header),
+                "学前222班","很厉害的一个班"
+        ));
+        list.add(new VideoItem(
+                BitmapFactory.decodeResource(getResources(),R.drawable.icon_header),
+                "学前333班","很厉害的一个班"
+        ));
+        list.add(new VideoItem(
+                BitmapFactory.decodeResource(getResources(),R.drawable.icon_header),
+                "学前1111班","很厉害的一个班"
+        ));
+        list.add(new VideoItem(
+                BitmapFactory.decodeResource(getResources(),R.drawable.icon_header),
+                "学前444班","很厉害的一个班"
+        ));
+
+        if(list.size() == 0){
             ll_noData.setVisibility(View.VISIBLE);
         }else {
             ll_noData.setVisibility(View.GONE);

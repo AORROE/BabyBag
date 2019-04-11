@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mission_ll"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -90,7 +91,7 @@
                     android:layout_height="15dp"
                     android:clickable="true"
                     android:layout_alignParentRight="true"
-                    android:src="@mipmap/icon_zan"/>
+                    android:src="@drawable/icon_zan"/>
             </RelativeLayout>
         </LinearLayout>
 

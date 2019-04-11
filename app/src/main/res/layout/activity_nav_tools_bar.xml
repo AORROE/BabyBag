@@ -18,7 +18,7 @@
             android:layout_height="20dp"
             android:layout_marginLeft="12dp"
             android:layout_gravity="center"
-            android:src="@mipmap/icon_menu"/>
+            android:src="@drawable/icon_menu"/>
         <TextView
             android:id="@+id/tv_title_bar"
             android:layout_width="0dp"

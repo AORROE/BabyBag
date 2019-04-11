@@ -1,5 +1,6 @@
 package com.hwt.babybag.ui.frag;
 
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -7,10 +8,16 @@ import android.support.v4.app.Fragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hwt.babybag.R;
+import com.hwt.babybag.adapter.MissionAdapter;
+import com.hwt.babybag.adapter.MissionItem;
 import com.hwt.babybag.adapter.RVAdapter;
 
 import java.util.ArrayList;
@@ -23,20 +30,21 @@ import java.util.List;
  */
 public class MissionFrag extends Fragment {
     private RecyclerView rv_mission;
-    private String[] videoContent = {"何老师","何老师","何老师","何老师"};
-    private List<String> dataList;
-    private RVAdapter adapter;
+    private List<MissionItem> missionData;
+    private MissionAdapter missionAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main_mission,container,false);
+        final View view = inflater.inflate(R.layout.fragment_main_mission,container,false);
         rv_mission = view.findViewById(R.id.mission_rv);
+        //初始化数据源
         initData();
-        adapter = new RVAdapter(view.getContext(),dataList);
+        //初始化适配器
+        initAdapter(view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         rv_mission.setLayoutManager(layoutManager);
-        rv_mission.setAdapter(adapter);
+        rv_mission.setAdapter(missionAdapter);
         return view;
     }
 
@@ -44,11 +52,43 @@ public class MissionFrag extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-    private void initData(){
-        dataList = new ArrayList<>();
-        for (int i = 0; i < videoContent.length; i++){
-            dataList.add(videoContent[i]);
-        }
 
+    /**
+     * 添加数据源
+     */
+    private void initData(){
+
+        missionData = new ArrayList<>();
+        for (int i = 0; i<20;i++){
+            missionData.add(new MissionItem(
+                    BitmapFactory.decodeResource(getResources(),R.drawable.icon_zhangweitu),
+                    "Arrow老师"+ i,"2019-04-11","中西部那就卡",0,0
+            ));
+        }
+    }
+
+    /**
+     * 初始化Adapter
+     * @param view
+     */
+    private void initAdapter(final View view){
+        missionAdapter = new MissionAdapter(R.layout.mission_item,missionData);
+        missionAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view1, int position) {
+                switch (view1.getId()){
+                    case R.id.complete:
+                        Log.i("arrow--onClick", "onItemChildClick: "+ position);
+                        Toast.makeText(view.getContext(),"完成:"+position,Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.mission_ll:
+                        Log.i("arrow--onClick", "onItemChildClick: "+ position+1);
+                        Toast.makeText(view.getContext(),"Item:"+(position +1),Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });
+        missionAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
+        missionAdapter.isFirstOnly(false);
     }
 }

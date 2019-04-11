@@ -34,7 +34,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.VideoViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull VideoViewHolder videoViewHolder, final int i) {
-        videoViewHolder.userNmae.setText(list.get(i));
+        videoViewHolder.userName.setText(list.get(i));
 //        videoViewHolder.video_introduce.setText(list.get(i));
 //        videoViewHolder.video_title.setText(list.get(i)+i);
 //        videoViewHolder.baby_ll_item.setOnClickListener(new View.OnClickListener() {
@@ -68,12 +68,12 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.VideoViewHolder>{
 
     class VideoViewHolder extends RecyclerView.ViewHolder{
         private ImageView userHeader,praise;
-        private TextView userNmae,addtime,missionContent;
+        private TextView userName,addtime,missionContent;
 
         public VideoViewHolder(@NonNull View itemView) {
             super(itemView);
             userHeader = itemView.findViewById(R.id.user_header);
-            userNmae = itemView.findViewById(R.id.user_name);
+            userName = itemView.findViewById(R.id.user_name);
             addtime = itemView.findViewById(R.id.add_time);
             missionContent = itemView.findViewById(R.id.mission_content);
 

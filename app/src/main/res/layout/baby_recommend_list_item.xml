@@ -24,7 +24,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
-            android:src="@mipmap/icon_bofang"/>
+            android:src="@drawable/icon_bofang"/>
         <RelativeLayout
             android:layout_gravity="bottom"
             android:layout_marginBottom="5dp"

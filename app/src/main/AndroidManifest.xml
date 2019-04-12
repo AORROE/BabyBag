@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.hwt.babybag">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -13,6 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ui.act.PersonInfoAct"/>
         <activity android:name=".MainActivity">
 
             <!-- <intent-filter> -->
@@ -22,7 +23,8 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".ui.act.LoginAct"
+        <activity
+            android:name=".ui.act.LoginAct"
             android:theme="@style/Translucent">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,8 +32,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.act.RegisterAct"
-            android:theme="@style/Translucent"/>
+        <activity
+            android:name=".ui.act.RegisterAct"
+            android:theme="@style/Translucent" />
     </application>
 
 </manifest>

@@ -1,7 +1,11 @@
 package com.hwt.babybag;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -10,6 +14,7 @@ import android.os.Bundle;
 import android.transition.Explode;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -17,8 +22,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hwt.babybag.ui.act.LoginAct;
+import com.hwt.babybag.ui.act.PersonInfoAct;
 import com.hwt.babybag.ui.frag.BabyFrag;
 import com.hwt.babybag.ui.frag.MineFrag;
 import com.hwt.babybag.ui.frag.MissionFrag;
@@ -68,12 +75,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public ImageView iv_mine;
     @BindView(R.id.toolsbar_menu)
     public ImageView icon_menu;
+    @BindView(R.id.icon_live)
+    public ImageView icon_live;
 
     //标题栏
     @BindView(R.id.tv_title_bar)
     public TextView tv_main_title;
     @BindView(R.id.ll_tools_bar_layout)
     public LinearLayout ll_tools_bar_layout;
+
+    //侧滑栏
+    @BindView(R.id.nav_view)
+    public NavigationView nav_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +106,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 drawerLayout.openDrawer(Gravity.LEFT);
+            }
+        });
+        nav_view.setCheckedItem(R.id.main_item);
+        nav_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                menuItem.setCheckable(true);//设置选项可选
+                menuItem.setChecked(true);//设置选型被选中
+                switch (menuItem.getItemId()){
+                    case R.id.person_info_item:
+                        Toast.makeText(MainActivity.this,"个人信息",Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(MainActivity.this, PersonInfoAct.class);
+                        startActivityForResult(intent,1);
+                        break;
+                    case R.id.change_password_item:
+                        Toast.makeText(MainActivity.this,"修改密码",Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.child_info_item:
+                        Toast.makeText(MainActivity.this,"孩子信息",Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.open_live_item:
+                        Toast.makeText(MainActivity.this,"开启直播",Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.login_out_item:
+                        Toast.makeText(MainActivity.this,"退出登录",Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                drawerLayout.closeDrawers();//关闭侧边菜单栏
+                return true;
             }
         });
     }
@@ -131,6 +173,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 clearBottomImageState();
                 selectDisplayView(3);
                 break;
+            case R.id.icon_live:
+                Toast.makeText(this,"请进行身份认证",Toast.LENGTH_SHORT).show();
+                break;
         }
     }
     /**
@@ -160,7 +205,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * 选择底部Tab，改变组件状态
+     * @param i
+     */
     private void setSelectedStatus(int i){
+        if(i == 2){
+            icon_live.setVisibility(View.VISIBLE);
+            icon_live.setOnClickListener(this);
+        }else {
+            icon_live.setVisibility(View.INVISIBLE);
+        }
         switch (i){
             case 0:
                 childInfoTab.setSelected(true);
@@ -284,4 +339,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i("Arrow", "requestCode: "+requestCode);
+        Log.i("Arrow", "resultCode: "+resultCode);
+        switch (resultCode){
+            case 0:
+                nav_view.setCheckedItem(R.id.main_item);
+                break;
+        }
+    }
 }

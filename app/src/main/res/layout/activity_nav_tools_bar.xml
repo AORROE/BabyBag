@@ -29,11 +29,29 @@
             android:textColor="#fff"
             android:textSize="15sp"
             />
-        <View
+
+        <FrameLayout
             android:layout_gravity="center"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginRight="12dp"/>
+            android:layout_marginRight="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/icon_live"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/icon_live"
+                android:visibility="invisible"/>
+            <TextView
+                android:id="@+id/right_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="@dimen/text_size"
+                android:textColor="#ffffff"
+                android:text="保存"
+                android:visibility="invisible"/>
+        </FrameLayout>
     </LinearLayout>
 
 </RelativeLayout>

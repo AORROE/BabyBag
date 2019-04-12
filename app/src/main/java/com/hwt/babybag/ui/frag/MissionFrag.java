@@ -12,13 +12,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hwt.babybag.R;
 import com.hwt.babybag.adapter.MissionAdapter;
 import com.hwt.babybag.adapter.MissionItem;
-import com.hwt.babybag.adapter.RVAdapter;
+import com.hwt.babybag.utils.MyDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +67,7 @@ public class MissionFrag extends Fragment {
             ));
         }
     }
-
+    MyDialog myDialog = null;
     /**
      * 初始化Adapter
      * @param view
@@ -75,15 +76,30 @@ public class MissionFrag extends Fragment {
         missionAdapter = new MissionAdapter(R.layout.mission_item,missionData);
         missionAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view1, int position) {
+            public void onItemChildClick(BaseQuickAdapter adapter, View view1, final int position) {
                 switch (view1.getId()){
                     case R.id.complete:
                         Log.i("arrow--onClick", "onItemChildClick: "+ position);
-                        Toast.makeText(view.getContext(),"完成:"+position,Toast.LENGTH_SHORT).show();
+                        myDialog= new MyDialog(view.getContext(), "是否确定完成任务",
+                                "确定",
+                                "取消",
+                                new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Toast.makeText(view.getContext(),"完成:"+position,Toast.LENGTH_SHORT).show();
+                                        myDialog.dismiss();
+                                    }
+                                });
+                        myDialog.setCannotBackPress();
+                        myDialog.setCancelable(false);
+                        myDialog.show();
                         break;
                     case R.id.mission_ll:
                         Log.i("arrow--onClick", "onItemChildClick: "+ position+1);
                         Toast.makeText(view.getContext(),"Item:"+(position +1),Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.icon_praise:
+                        Toast.makeText(view.getContext(),"点赞成功:"+(position +1),Toast.LENGTH_SHORT).show();
                         break;
                 }
             }

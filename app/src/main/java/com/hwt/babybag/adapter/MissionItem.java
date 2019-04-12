@@ -11,6 +11,7 @@ public class MissionItem {
     private String missionContent;
     private int isComplete;
     private int isPraise;
+    Boolean isCheck = false;
 
     public MissionItem() {
     }

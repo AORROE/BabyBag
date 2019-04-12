@@ -2,25 +2,29 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/test1"
-            android:icon="@drawable/ic_launcher_background"
-            android:title="@string/nav_person_info"/>
+            android:id="@+id/main_item"
+            android:icon="@drawable/icon_baby"
+            android:title="@string/bottom_childInfo_tab" />
         <item
-            android:id="@+id/test2"
-            android:icon="@drawable/ic_launcher_background"
+            android:id="@+id/person_info_item"
+            android:icon="@drawable/icon_person_info"
+            android:title="@string/nav_person_info" />
+        <item
+            android:id="@+id/change_password_item"
+            android:icon="@drawable/icon_change_password"
             android:title="@string/nav_change_password"/>
         <item
-            android:id="@+id/test3"
-            android:icon="@drawable/ic_launcher_background"
+            android:id="@+id/child_info_item"
+            android:icon="@drawable/icon_child_info"
             android:title="@string/nav_child_info"/>
 
         <item
-            android:id="@+id/test4"
-            android:icon="@drawable/ic_launcher_background"
+            android:id="@+id/open_live_item"
+            android:icon="@drawable/icon_live"
             android:title="@string/nav_open_live"/>
         <item
-            android:id="@+id/test5"
-            android:icon="@drawable/ic_launcher_background"
+            android:id="@+id/login_out_item"
+            android:icon="@drawable/icon_login_out"
             android:title="@string/nav_login_out"/>
     </group>
 

@@ -24,8 +24,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hwt.babybag.ui.act.ChangePasswordAct;
+import com.hwt.babybag.ui.act.ChildManagerAct;
 import com.hwt.babybag.ui.act.LoginAct;
 import com.hwt.babybag.ui.act.PersonInfoAct;
+import com.hwt.babybag.ui.act.UserCheckAct;
 import com.hwt.babybag.ui.frag.BabyFrag;
 import com.hwt.babybag.ui.frag.MineFrag;
 import com.hwt.babybag.ui.frag.MissionFrag;
@@ -114,23 +117,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 menuItem.setCheckable(true);//设置选项可选
                 menuItem.setChecked(true);//设置选型被选中
+                Intent intent = null;
                 switch (menuItem.getItemId()){
                     case R.id.person_info_item:
-                        Toast.makeText(MainActivity.this,"个人信息",Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(MainActivity.this, PersonInfoAct.class);
+                        intent = new Intent(MainActivity.this, PersonInfoAct.class);
                         startActivityForResult(intent,1);
                         break;
                     case R.id.change_password_item:
-                        Toast.makeText(MainActivity.this,"修改密码",Toast.LENGTH_SHORT).show();
+                        intent = new Intent(MainActivity.this, ChangePasswordAct.class);
+                        startActivityForResult(intent,2);
                         break;
                     case R.id.child_info_item:
-                        Toast.makeText(MainActivity.this,"孩子信息",Toast.LENGTH_SHORT).show();
+                        intent = new Intent(MainActivity.this, ChildManagerAct.class);
+                        startActivityForResult(intent,3);
                         break;
                     case R.id.open_live_item:
-                        Toast.makeText(MainActivity.this,"开启直播",Toast.LENGTH_SHORT).show();
+                        intent = new Intent(MainActivity.this, UserCheckAct.class);
+                        startActivityForResult(intent,4);
                         break;
                     case R.id.login_out_item:
                         Toast.makeText(MainActivity.this,"退出登录",Toast.LENGTH_SHORT).show();
+                        intent = new Intent(MainActivity.this, LoginAct.class);
+                        startActivity(intent);
+                        finish();
                         break;
                 }
                 drawerLayout.closeDrawers();//关闭侧边菜单栏
@@ -174,7 +183,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 selectDisplayView(3);
                 break;
             case R.id.icon_live:
-                Toast.makeText(this,"请进行身份认证",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this,UserCheckAct.class);
+                startActivity(intent);
                 break;
         }
     }

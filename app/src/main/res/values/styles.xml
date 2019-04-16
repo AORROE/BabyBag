@@ -33,4 +33,20 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
     </style>
+
+    <style name="ChooseDialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item><!--移除边框-->
+        <item name="android:windowNoTitle">true</item><!--去除顶部标题栏-->
+        <item name="android:windowIsTranslucent">true</item><!--窗体透明-->
+        <item name="android:background">#00000000</item><!--背景透明-->
+        <item name="android:windowBackground">@android:color/transparent</item><!--窗体背景透明-->
+        <item name="android:windowIsFloating">false</item><!--窗体是否浮动-->
+        <item name="android:backgroundDimEnabled">true</item><!--背景是否昏暗-->
+        <item name="android:backgroundDimAmount">0.6</item><!--昏暗数量-->
+    </style>
+
+    <style name="dialog_animation">
+        <item name="android:windowEnterAnimation">@anim/dialog_in_anim</item>
+        <item name="android:windowExitAnimation">@anim/dialog_out_anim</item>
+    </style>
 </resources>

@@ -2,6 +2,7 @@ package com.hwt.babybag.ui.act;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -58,9 +59,10 @@ public class LoginAct extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         ButterKnife.bind(this);
+        fab.setImageResource(R.drawable.icon_child_info);
     }
 
-//    public void login(){
+    //    public void login(){
 //        if(!TextUtils.isEmpty(userName.getText().toString())
 //          &&!TextUtils.isEmpty(password.getText().toString())){
 //            OkHttpClient client = new OkHttpClient();
@@ -118,8 +120,8 @@ public class LoginAct extends AppCompatActivity {
 //                getWindow().setExitTransition(null);
 //                getWindow().setEnterTransition(null);
 //                ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(this);
-                Intent i2 = new Intent(this,MainActivity.class);
 //                startActivity(i2, oc2.toBundle());
+                Intent i2 = new Intent(this,MainActivity.class);
                 startActivity(i2);
                 finish();
 //                login();

@@ -31,10 +31,10 @@ public class RegisterAct extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ShowEnterAnimation();
         }
+        fab.setImageResource(R.drawable.icon_child_info);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,7 +52,6 @@ public class RegisterAct extends AppCompatActivity {
     private void ShowEnterAnimation() {
         Transition transition = TransitionInflater.from(this).inflateTransition(R.transition.fabtransition);
         getWindow().setSharedElementEnterTransition(transition);
-
         transition.addListener(new Transition.TransitionListener() {
             @Override
             public void onTransitionStart(Transition transition) {
@@ -104,7 +103,8 @@ public class RegisterAct extends AppCompatActivity {
     }
 
     public void animateRevealClose() {
-        Animator mAnimator = ViewAnimationUtils.createCircularReveal(cvAdd,cvAdd.getWidth()/2,0, cvAdd.getHeight(), fab.getWidth() / 2);
+        Animator mAnimator = ViewAnimationUtils.createCircularReveal(cvAdd,cvAdd.getWidth()/2,
+                0, cvAdd.getHeight(), fab.getWidth() / 2);
         mAnimator.setDuration(500);
         mAnimator.setInterpolator(new AccelerateInterpolator());
         mAnimator.addListener(new AnimatorListenerAdapter() {
@@ -112,7 +112,7 @@ public class RegisterAct extends AppCompatActivity {
             public void onAnimationEnd(Animator animation) {
                 cvAdd.setVisibility(View.INVISIBLE);
                 super.onAnimationEnd(animation);
-//                fab.setImageResource(R.drawable.plus);
+//                fab.setImageResource(R.drawable.icon_child_info);
                 RegisterAct.super.onBackPressed();
             }
 

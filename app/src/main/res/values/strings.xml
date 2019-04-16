@@ -10,7 +10,7 @@
     <!--侧滑item-->
     <string name="nav_person_info">个人信息</string>
     <string name="nav_change_password">修改密码</string>
-    <string name="nav_child_info">孩子信息</string>
+    <string name="nav_child_info">孩子管理</string>
     <string name="nav_open_live">开启直播</string>
     <string name="nav_login_out">退出登录</string>
 
@@ -33,4 +33,17 @@
     <string name="baby_study">学习性格</string>
     <string name="baby_recommend">推荐</string>
     <string name="no_data_text">没有数据哟~~</string>
+    <string name="user_check">家长认证</string>
+    <string name="input_user_name">请输入姓名</string>
+    <string name="input_mobile">请输入手机号</string>
+    <string name="mobile">手机号</string>
+    <string name="confirm_btn_text">确认提交</string>
+    <string name="new_pwd">新密码</string>
+    <string name="input_new_pwd">请输入新密码</string>
+    <string name="confirm_new_pwd">确认密码</string>
+    <string name="input_confirm_pwd">请输入确认密码</string>
+    <string name="confirm_modify_text">确认修改</string>
+    <string name="child_add">添加孩子</string>
+    <string name="avatar">头像</string>
+    <string name="unBind_child">解绑关系</string>
 </resources>

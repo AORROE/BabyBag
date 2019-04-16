@@ -24,7 +24,7 @@
             android:singleLine="true"
             android:hint="请输入新昵称"
             android:theme="@style/MyEditText"
-            android:textCursorDrawable="@drawable/cursot_color"
+            android:textCursorDrawable="@drawable/cursor_color"
             android:textSize="@dimen/text_size" />
         <ImageView
             android:id="@+id/clear_text"

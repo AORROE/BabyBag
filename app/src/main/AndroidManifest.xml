@@ -13,18 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.act.PersonInfoAct"/>
-        <activity android:name=".MainActivity">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
+        <activity android:name=".ui.act.ChildInfoAct"></activity>
+        <activity android:name=".ui.act.ChildManagerAct" />
+        <activity android:name=".ui.act.ChangePasswordAct" />
+        <activity android:name=".ui.act.UserCheckAct" />
+        <activity android:name=".ui.act.PersonInfoAct" />
+        <activity android:name=".MainActivity" />
         <activity
             android:name=".ui.act.LoginAct"
+            android:launchMode="singleTask"
             android:theme="@style/Translucent">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

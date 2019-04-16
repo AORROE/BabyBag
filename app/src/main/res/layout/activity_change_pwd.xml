@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorE1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.act.UserCheckAct">
+
+    <include layout="@layout/activity_nav_tools_bar"/>
+
+    <LinearLayout
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size"
+                android:textColor="@color/text_color"
+                android:text="@string/new_pwd"/>
+            <EditText
+                android:id="@+id/new_pwd_et"
+                android:layout_width="0dp"
+                android:layout_weight="6"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:textSize="@dimen/text_size"
+                android:hint="@string/input_new_pwd"
+                android:textCursorDrawable="@drawable/cursor_color"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:background="@null"/>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorE1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size"
+                android:textColor="@color/text_color"
+                android:text="@string/confirm_new_pwd"/>
+            <EditText
+                android:id="@+id/mobile_et"
+                android:layout_width="0dp"
+                android:layout_weight="6"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:textSize="@dimen/text_size"
+                android:hint="@string/input_confirm_pwd"
+                android:textCursorDrawable="@drawable/cursor_color"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:background="@null"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:textColor="@color/white"
+        android:background="@drawable/submit_btn_shape"
+        android:text="@string/confirm_modify_text"/>
+
+</LinearLayout>

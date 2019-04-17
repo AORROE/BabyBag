@@ -201,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * @param i
      */
     private void selectDisplayView(int i) {
-        removeAllView();
+//        removeAllView();
         createView(i);
         setSelectedStatus(i);
     }
@@ -209,11 +209,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * 移除不需要的视图
      */
-    private void removeAllView() {
-        for (int i = 0;i< bodyLayout.getChildCount();i++){
-            bodyLayout.getChildAt(i).setVisibility(View.GONE);
-        }
-    }
+//    private void removeAllView() {
+//        Log.i("arrow", "removeAllView: ");
+//        for (int i = 0;i< bodyLayout.getChildCount();i++){
+//            bodyLayout.getChildAt(i).setVisibility(View.GONE);
+//        }
+//    }
 
     /**
      * 选择底部Tab，改变组件状态
@@ -226,6 +227,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }else {
             icon_live.setVisibility(View.INVISIBLE);
         }
+        Log.i("arrow", "setSelectedStatus: ");
         switch (i){
             case 0:
                 childInfoTab.setSelected(true);
@@ -262,6 +264,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * @param viewIndex
      */
     private void createView(int viewIndex) {
+        Log.i("arrow", "createView: ");
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         switch (viewIndex){
             case 0:

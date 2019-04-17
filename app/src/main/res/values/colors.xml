@@ -7,4 +7,12 @@
     <color name="text_color">#333333</color>
     <color name="white">#ffffff</color>
     <color name="colorE1">#e1e1e1</color>
+
+    <color name="color9688">#009688</color>
+    <color name="colorBCD4">#00BCD4</color>
+    <color name="color1E63">#E91E63</color>
+    <color name="color27B0">#9C27B0</color>
+    <color name="colorEB3B">#FFEB3B</color>
+    <color name="color4336">#F44336</color>
+    <color name="colorC34A">#8BC34A</color>
 </resources>

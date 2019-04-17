@@ -19,5 +19,6 @@ public class VideoAdapter extends BaseQuickAdapter<VideoItem, BaseViewHolder> {
         helper.setText(R.id.video_title,item.getVideoTitle());
         helper.setText(R.id.video_introduce,item.getVideoInstroduce());
         helper.setImageBitmap(R.id.video_cover,item.getVideoCover());
+        helper.addOnClickListener(R.id.baby_ll_item);
     }
 }

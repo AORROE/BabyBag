@@ -1,6 +1,7 @@
 package com.hwt.babybag.ui.frag;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,11 +14,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hwt.babybag.R;
 import com.hwt.babybag.adapter.VideoAdapter;
 import com.hwt.babybag.adapter.VideoItem;
+import com.hwt.babybag.ui.act.VideoAct;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +74,8 @@ public class VideoContainerFrag extends Fragment {
         myAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view1, int position) {
-
+                Intent videoIntent = new Intent(view.getContext(), VideoAct.class);
+                startActivity(videoIntent);
             }
         });
         myAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);

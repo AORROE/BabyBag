@@ -3,16 +3,15 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
-    <View
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:background="@color/colorBCD4"
-        android:layout_height="5dp"/>
     <View
         android:layout_width="0dp"
         android:layout_weight="1"
         android:background="@color/color9688"
+        android:layout_height="5dp"/>
+    <View
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:background="@color/colorBCD4"
         android:layout_height="5dp"/>
     <View
         android:layout_width="0dp"

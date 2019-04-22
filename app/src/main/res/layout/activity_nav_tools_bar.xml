@@ -11,7 +11,7 @@
         android:id="@+id/ll_tools_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="36dp"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/colorBCD42"
         android:orientation="horizontal">
         <ImageView
             android:id="@+id/toolsbar_menu"

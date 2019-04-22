@@ -1,7 +1,12 @@
 package com.hwt.babybag;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,6 +29,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.ViewTarget;
+import com.bumptech.glide.request.transition.Transition;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.hwt.babybag.bean.ChildInfoBean;
+import com.hwt.babybag.bean.UserInfo;
+import com.hwt.babybag.ui.IImagePicker;
 import com.hwt.babybag.ui.act.ChangePasswordAct;
 import com.hwt.babybag.ui.act.ChildManagerAct;
 import com.hwt.babybag.ui.act.LoginAct;
@@ -33,9 +46,16 @@ import com.hwt.babybag.ui.frag.BabyFrag;
 import com.hwt.babybag.ui.frag.MineFrag;
 import com.hwt.babybag.ui.frag.MissionFrag;
 import com.hwt.babybag.ui.frag.VideoFrag;
+import com.hwt.babybag.utils.ChooseImg;
+import com.qingmei2.rximagepicker.core.RxImagePicker;
+import com.qingmei2.rximagepicker.entity.Result;
+
+import java.lang.reflect.Type;
+
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.functions.Consumer;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -80,6 +100,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public ImageView icon_menu;
     @BindView(R.id.icon_live)
     public ImageView icon_live;
+    public ImageView header_img;
+    public TextView header_title;
+    public LinearLayout header_back;
 
     //标题栏
     @BindView(R.id.tv_title_bar)
@@ -91,18 +114,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.nav_view)
     public NavigationView nav_view;
 
+    private UserInfo user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-//        Explode explode = new Explode();
-//        explode.setDuration(500);
-//        getWindow().setExitTransition(explode);
-//        getWindow().setEnterTransition(explode);
         setHalfTransparent();
         setStatusBarFullTransparent();
         init();
+        getUserInfo();
         setListener();
         setInitStatus();
         icon_menu.setOnClickListener(new View.OnClickListener() {
@@ -121,6 +143,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 switch (menuItem.getItemId()){
                     case R.id.person_info_item:
                         intent = new Intent(MainActivity.this, PersonInfoAct.class);
+                        intent.putExtra("USERINFO",user);
                         startActivityForResult(intent,1);
                         break;
                     case R.id.change_password_item:
@@ -153,6 +176,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void init() {
         tv_main_title.setText("首页");
+        View view = nav_view.getHeaderView(0);
+        header_title = view.findViewById(R.id.header_title);
+        header_img = view.findViewById(R.id.header_img);
+        header_back = view.findViewById(R.id.header_back);
+        header_img.setOnClickListener(this);
+        header_back.setOnClickListener(this);
+
     }
 
     /**
@@ -163,6 +193,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             bottomBar.getChildAt(i).setOnClickListener(this);
         }
     }
+
+    /**
+     * 点击事件
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -186,6 +221,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent = new Intent(MainActivity.this,UserCheckAct.class);
                 startActivity(intent);
                 break;
+            case R.id.header_img:
+                ChooseImg.getInstance().chooserImg(header_img,MainActivity.this);
+                Toast.makeText(MainActivity.this,"test",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.header_back:
+                ChooseImg.getInstance().chooserImg(header_back,MainActivity.this);
+                Toast.makeText(MainActivity.this,"test",Toast.LENGTH_SHORT).show();
+                break;
         }
     }
     /**
@@ -205,17 +248,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         createView(i);
         setSelectedStatus(i);
     }
-
-    /**
-     * 移除不需要的视图
-     */
-//    private void removeAllView() {
-//        Log.i("arrow", "removeAllView: ");
-//        for (int i = 0;i< bodyLayout.getChildCount();i++){
-//            bodyLayout.getChildAt(i).setVisibility(View.GONE);
-//        }
-//    }
-
     /**
      * 选择底部Tab，改变组件状态
      * @param i
@@ -319,6 +351,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i("Arrow", "requestCode: "+requestCode);
+        Log.i("Arrow", "resultCode: "+resultCode);
+        switch (resultCode){
+            case 0:
+                nav_view.setCheckedItem(R.id.main_item);
+                break;
+        }
+    }
+
+    /**
+     * 获取用户信息
+     */
+    private void getUserInfo(){
+        SharedPreferences sp = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String userInfo = sp.getString("USERINFO",null);
+        Type type = new TypeToken<UserInfo>(){}.getType();
+        user = gson.fromJson(userInfo,type);
+        Log.i("arrow", "getUserInfo: "+ user.toString());
+        header_title.setText(user.getNickName());
+    }
+
     /**
      * 全透明
      */
@@ -352,15 +409,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.i("Arrow", "requestCode: "+requestCode);
-        Log.i("Arrow", "resultCode: "+resultCode);
-        switch (resultCode){
-            case 0:
-                nav_view.setCheckedItem(R.id.main_item);
-                break;
-        }
-    }
+
+    /**
+     * 移除不需要的视图
+     */
+//    private void removeAllView() {
+//        Log.i("arrow", "removeAllView: ");
+//        for (int i = 0;i< bodyLayout.getChildCount();i++){
+//            bodyLayout.getChildAt(i).setVisibility(View.GONE);
+//        }
+//    }
 }

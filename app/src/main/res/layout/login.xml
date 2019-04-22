@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.act.LoginAct"
-    android:background="@color/colorPrimary"
+    android:background="@drawable/launcher"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -118,8 +118,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:fabSize="normal"
-        android:src="#000000"
-        android:backgroundTint="@color/colorAccent"
+        android:backgroundTint="@color/colorBCD4"
         android:transitionName="loginFab"
         android:layout_alignTop="@id/login_cv"
         android:layout_marginTop="25dp"

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">BabyBag</string>
-    <string name="nav_user_name">ARROW</string>
+    <string name="nav_user_name">ARROW1111</string>
     <string name="nav_relationship">爸爸</string>
     <string name="bottom_childInfo_tab">首页</string>
     <string name="bottom_mission_tab">任务卡</string>
@@ -46,4 +46,5 @@
     <string name="child_add">添加孩子</string>
     <string name="avatar">头像</string>
     <string name="unBind_child">解绑关系</string>
+    <string name="no_data">******</string>
 </resources>

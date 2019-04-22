@@ -20,6 +20,7 @@
             app:corner_radius="10dp"
             android:src="@drawable/icon_zhangweitu"/>
         <TextView
+            android:id="@+id/child_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/tag_shape"
@@ -50,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/child_name_tag"
-                android:text="小小"/>
+                android:text="@string/no_data"/>
             <Button
                 android:id="@+id/child_change"
                 android:layout_alignParentRight="true"
@@ -79,7 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/child_age_tag"
-                android:text="5 岁"/>
+                android:text="@string/no_data"/>
         </RelativeLayout>
         <RelativeLayout
             android:layout_marginLeft="10dp"
@@ -99,7 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/child_class_tag"
-                android:text="某某某幼儿园小班101"/>
+                android:text="@string/no_data"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -120,7 +121,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/child_introduce_tag"
-                android:text="可爱，开朗，活泼的孩子"/>
+                android:text="@string/no_data"/>
         </RelativeLayout>
     </LinearLayout>
 

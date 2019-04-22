@@ -7,24 +7,29 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.hwt.babybag.MainActivity;
+import com.hwt.babybag.MyApplication;
 import com.hwt.babybag.R;
+import com.hwt.babybag.bean.BaseEntity;
 import com.hwt.babybag.bean.UserInfo;
+import com.hwt.babybag.network.RetrofitFactory;
 import com.hwt.babybag.ui.frag.ChangeNicknameFrag;
 import com.hwt.babybag.utils.ChooseImg;
 
+import java.util.HashMap;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class PersonInfoAct extends AppCompatActivity implements View.OnClickListener {
     @BindView(R.id.tv_title_bar)
@@ -63,7 +68,8 @@ public class PersonInfoAct extends AppCompatActivity implements View.OnClickList
     FragmentTransaction fragmentManager;
     private int flag = 0;
 
-    private int userId = 0;
+    private int userId;
+    UserInfo userInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,20 +87,21 @@ public class PersonInfoAct extends AppCompatActivity implements View.OnClickList
      */
     private void setData(){
         Intent intent = getIntent();
-        UserInfo userInfo = intent.getParcelableExtra("USERINFO");
+        userInfo = intent.getParcelableExtra("USERINFO");
         Log.i("arrow", "onCreate: "+userInfo.toString());
         if(userInfo.getPhoto()!= null){
             Uri uri = Uri.parse(userInfo.getPhoto());
             Glide.with(this).load(uri).into(user_avatar);
         }
         userId = userInfo.getUserId();
-        user_nickname.setText(userInfo.getNickName());
-        user_sign.setText(userInfo.getIndividualitySign());
-        if(userInfo.getSex() == 0){
-            user_sex.setText("男");
-        }else {
-            user_sex.setText("女");
-        }
+        onRefreshUser(userId);
+//        user_nickname.setText(userInfo.getNickName());
+//        user_sign.setText(userInfo.getIndividualitySign());
+//        if(userInfo.getSex() == 0){
+//            user_sex.setText("男");
+//        }else {
+//            user_sex.setText("女");
+//        }
     }
 
     private void setListener(){
@@ -144,18 +151,61 @@ public class PersonInfoAct extends AppCompatActivity implements View.OnClickList
             case R.id.right_text:
                 if(flagFrag instanceof ChangeNicknameFrag){
                     ((ChangeNicknameFrag) flagFrag).updateUser();
+                    user_nickname.setText(((ChangeNicknameFrag) flagFrag).getUserNickName());
                     if(flag != 0){
                         fragmentManager.remove(flagFrag);
                         saveText.setVisibility(View.INVISIBLE);
                         flag = 0;
                     }else {
-                        this.setResult(0);
-                        this.finish();
+//                        this.setResult(0);
+//                        this.finish();
                     }
                 }
                 break;
         }
         fragmentManager.commit();
+    }
+
+    private void onRefreshUser(int userId){
+//        UserInfo params = new UserInfo();
+//        params.setUserId(userId);
+        HashMap<String,Object> params = new HashMap<>();
+        params.put("userId",userId);
+        RetrofitFactory.getRetrofiInstace().Api()
+                .findOne(params)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BaseEntity<UserInfo>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(BaseEntity<UserInfo> userInfoBaseEntity) {
+                        if(userInfoBaseEntity.getStatus() == 1){
+                            UserInfo info = userInfoBaseEntity.getResult();
+                            user_nickname.setText(info.getNickName());
+                            user_sign.setText(info.getIndividualitySign());
+                            if(info.getSex() == 0){
+                                user_sex.setText("男");
+                            }else {
+                                user_sex.setText("女");
+                            }
+//                            Log.i(MyApplication.TAG, "onNext: "+user_nickname.getText());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     @Override

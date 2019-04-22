@@ -36,6 +36,7 @@
                 android:layout_weight="6"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
+                android:inputType="textPassword"
                 android:textSize="@dimen/text_size"
                 android:hint="@string/input_new_pwd"
                 android:textCursorDrawable="@drawable/cursor_color"
@@ -73,6 +74,7 @@
                 android:layout_weight="6"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
+                android:inputType="textPassword"
                 android:textSize="@dimen/text_size"
                 android:hint="@string/input_confirm_pwd"
                 android:textCursorDrawable="@drawable/cursor_color"
@@ -83,6 +85,7 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/submit_change"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"

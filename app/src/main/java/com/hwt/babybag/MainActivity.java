@@ -34,8 +34,10 @@ import com.bumptech.glide.request.target.ViewTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.hwt.babybag.bean.BaseEntity;
 import com.hwt.babybag.bean.ChildInfoBean;
 import com.hwt.babybag.bean.UserInfo;
+import com.hwt.babybag.network.RetrofitFactory;
 import com.hwt.babybag.ui.IImagePicker;
 import com.hwt.babybag.ui.act.ChangePasswordAct;
 import com.hwt.babybag.ui.act.ChildManagerAct;
@@ -51,11 +53,16 @@ import com.qingmei2.rximagepicker.core.RxImagePicker;
 import com.qingmei2.rximagepicker.entity.Result;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
 
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -148,14 +155,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     case R.id.change_password_item:
                         intent = new Intent(MainActivity.this, ChangePasswordAct.class);
+                        intent.putExtra("USERINFO",user);
                         startActivityForResult(intent,2);
                         break;
                     case R.id.child_info_item:
                         intent = new Intent(MainActivity.this, ChildManagerAct.class);
+                        intent.putExtra("USERINFO",user);
                         startActivityForResult(intent,3);
                         break;
                     case R.id.open_live_item:
                         intent = new Intent(MainActivity.this, UserCheckAct.class);
+                        intent.putExtra("USERINFO",user);
                         startActivityForResult(intent,4);
                         break;
                     case R.id.login_out_item:
@@ -359,6 +369,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (resultCode){
             case 0:
                 nav_view.setCheckedItem(R.id.main_item);
+                onRefresh(user.getUserId());
                 break;
         }
     }
@@ -375,6 +386,46 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.i("arrow", "getUserInfo: "+ user.toString());
         header_title.setText(user.getNickName());
     }
+
+    /**
+     * 刷新用户信息
+     * @param userId
+     */
+    private void onRefresh(int userId){
+        HashMap<String,Object> params = new HashMap<>();
+        params.put("userId",userId);
+        RetrofitFactory.getRetrofiInstace().Api()
+                .findOne(params)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BaseEntity<UserInfo>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(BaseEntity<UserInfo> userInfoBaseEntity) {
+                        if(userInfoBaseEntity.getStatus() == 1){
+                            UserInfo info = userInfoBaseEntity.getResult();
+                            header_title.setText(info.getNickName());
+//                            Log.i(MyApplication.TAG, "onNext: "+info.getNickName());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+
 
     /**
      * 全透明

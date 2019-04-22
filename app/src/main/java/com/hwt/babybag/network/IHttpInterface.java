@@ -1,6 +1,7 @@
 package com.hwt.babybag.network;
 
 import com.hwt.babybag.bean.BaseEntity;
+import com.hwt.babybag.bean.ChildInfoBean;
 import com.hwt.babybag.bean.UserInfo;
 
 import java.util.Map;
@@ -18,6 +19,21 @@ public interface IHttpInterface {
     Observable<BaseEntity> register(@Body Map<String,Object> params);
 
     @POST("user/updateUser")
-    Observable<BaseEntity> updateUser(@Body Map<String,Object> params);
+    Observable<BaseEntity> updateUser(@Body UserInfo params);
+
+    @POST("user/modifyPassword")
+    Observable<BaseEntity> modifyPassword(@Body Map<String,Object> params);
+
+    @POST("user/findOne")
+    Observable<BaseEntity<UserInfo>> findOne(@Body Map<String,Object> params);
+
+    @POST("child/findChildById")
+    Observable<BaseEntity<ChildInfoBean>> findChildById(@Body ChildInfoBean ChildInfoBean);
+
+    @POST("child/addChild")
+    Observable<BaseEntity> addChild(@Body ChildInfoBean params);
+
+    @POST("application/commitApplication")
+    Observable<BaseEntity> commitApplication(@Body Map<String,Object> params);
 
 }

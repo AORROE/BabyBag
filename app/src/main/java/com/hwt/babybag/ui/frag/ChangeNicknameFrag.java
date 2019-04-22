@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.hwt.babybag.MyApplication;
 import com.hwt.babybag.R;
 import com.hwt.babybag.bean.BaseEntity;
+import com.hwt.babybag.bean.UserInfo;
 import com.hwt.babybag.network.RetrofitFactory;
 import com.hwt.babybag.ui.act.PersonInfoAct;
 import com.hwt.babybag.ui.act.RegisterAct;
@@ -35,6 +36,7 @@ public class ChangeNicknameFrag extends Fragment implements View.OnClickListener
     private EditText nickName;
     private ImageView clearText;
     public int userId = 0;
+    private String userNickName;
 
     @Nullable
     @Override
@@ -73,9 +75,11 @@ public class ChangeNicknameFrag extends Fragment implements View.OnClickListener
     }
 
     public void updateUser(){
-        HashMap<String,Object> params = new HashMap<>();
-        params.put("userId",userId);
-        params.put("nickName",nickName.getText().toString());
+        Log.i(MyApplication.TAG, "updateUser: "+nickName.getText().toString());
+        UserInfo params = new UserInfo();
+        params.setUserId(userId);
+        params.setNickName(nickName.getText().toString());
+        setUserNickName(nickName.getText().toString());
         RetrofitFactory.getRetrofiInstace().Api()
                 .updateUser(params)
                 .subscribeOn(Schedulers.io())
@@ -107,4 +111,11 @@ public class ChangeNicknameFrag extends Fragment implements View.OnClickListener
                 });
     }
 
+    public String getUserNickName() {
+        return userNickName;
+    }
+
+    public void setUserNickName(String userNickName) {
+        this.userNickName = userNickName;
+    }
 }

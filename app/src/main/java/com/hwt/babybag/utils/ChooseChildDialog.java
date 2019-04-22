@@ -16,34 +16,32 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hwt.babybag.R;
+import com.hwt.babybag.bean.ChildInfoBean;
+
+import java.util.List;
 
 public class ChooseChildDialog extends Dialog{
-    private Bitmap childAvatar;
-    private String childName;
-    private View.OnClickListener childClickListener;
+//    private Bitmap childAvatar;
+//    private String childName;
+    private List<ChildInfoBean> childs;
+    private MyCallBack myCallBack;
 
-    public ChooseChildDialog(Context context, Bitmap childAvatar, String childName,
-                             View.OnClickListener childClickListener) {
+    public ChooseChildDialog(Context context, List<ChildInfoBean> childs,MyCallBack myCallBack) {
         super(context, R.style.ChooseDialog);
-        this.childAvatar = childAvatar;
-        this.childName = childName;
-        this.childClickListener = childClickListener;
+        this.childs = childs;
+        this.myCallBack = myCallBack;
     }
 
-    public ChooseChildDialog(Context context, int themeResId, Bitmap childAvatar, String childName,
-                             View.OnClickListener childClickListener) {
+    public ChooseChildDialog(Context context, int themeResId, List<ChildInfoBean> childs,MyCallBack myCallBack) {
         super(context, themeResId);
-        this.childAvatar = childAvatar;
-        this.childName = childName;
-        this.childClickListener = childClickListener;
+        this.childs = childs;
+        this.myCallBack = myCallBack;
     }
 
-    public ChooseChildDialog(Context context, boolean cancelable, OnCancelListener cancelListener,
-                             Bitmap childAvatar, String childName, View.OnClickListener childClickListener) {
+    public ChooseChildDialog(Context context, boolean cancelable, OnCancelListener cancelListener,List<ChildInfoBean> childs,MyCallBack myCallBack) {
         super(context, cancelable, cancelListener);
-        this.childAvatar = childAvatar;
-        this.childName = childName;
-        this.childClickListener = childClickListener;
+        this.childs = childs;
+        this.myCallBack = myCallBack;
     }
 
     @Override
@@ -54,44 +52,25 @@ public class ChooseChildDialog extends Dialog{
     }
 
     private void initView(){
-        LinearLayout child_choose_ll = findViewById(R.id.child_choose_ll);
         LinearLayout bottom_dialog = findViewById(R.id.bottom_dialog);
-        ImageView child_avatar = findViewById(R.id.child_avatar_check);
-        TextView child_name = findViewById(R.id.child_name_check);
-
-        if(childAvatar != null){
-            child_avatar.setImageBitmap(childAvatar);
+        Log.i("arrow", "initView: "+childs.size());
+        if(childs.size() > 0){
+            for (ChildInfoBean child : childs){
+                View view = LayoutInflater.from(this.getContext()).inflate(R.layout.childs_dialog_layout,null);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT);
+                params.weight=1;
+                view.setLayoutParams(params);
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        myCallBack.getChildId(child.getChildId());
+                    }
+                });
+                TextView child_name_check = view.findViewById(R.id.child_name_check);
+                child_name_check.setText(child.getChildName());
+                bottom_dialog.addView(view);
+            }
         }
-        if(!TextUtils.isEmpty(childName)){
-            child_name.setText(childName);
-        }
-        child_choose_ll.setOnClickListener(childClickListener);
-        View view = LayoutInflater.from(this.getContext()).inflate(R.layout.child_manager_footer,null);
-        bottom_dialog.addView(view);
-    }
-
-    public Bitmap getChildAvatar() {
-        return childAvatar;
-    }
-
-    public void setChildAvatar(Bitmap childAvatar) {
-        this.childAvatar = childAvatar;
-    }
-
-    public String getChildName() {
-        return childName;
-    }
-
-    public void setChildName(String childName) {
-        this.childName = childName;
-    }
-
-    public View.OnClickListener getChildClickListener() {
-        return childClickListener;
-    }
-
-    public void setChildClickListener(View.OnClickListener childClickListener) {
-        this.childClickListener = childClickListener;
     }
 
     public void setCannotBackPress() {
@@ -104,6 +83,10 @@ public class ChooseChildDialog extends Dialog{
                 return false;
             }
         });
+    }
+
+    public interface MyCallBack{
+        void getChildId(int id);
     }
 
 }

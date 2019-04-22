@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hwt.babybag.R;
+import com.hwt.babybag.bean.ChildInfoBean;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,6 +30,8 @@ public class ChildInfoAct extends AppCompatActivity implements View.OnClickListe
     public TextView child_birthday;
     @BindView(R.id.child_class)
     public TextView child_group_class;
+    @BindView(R.id.child_instruction)
+    public TextView child_instruction;
     @BindView(R.id.unbind_child)
     public Button unbind_child;
 
@@ -49,7 +52,14 @@ public class ChildInfoAct extends AppCompatActivity implements View.OnClickListe
      * @param intent
      */
     public void setData(Intent intent){
+        ChildInfoBean childInfo = intent.getParcelableExtra("childInfo");
         child_name.setText(intent.getStringExtra("childName"));
+        child_instruction.setText(childInfo.getCharacterInstructe());
+        if(childInfo.getSex() == 0){
+            child_sex.setText("男");
+        }else {
+            child_sex.setText("女");
+        }
     }
 
     @Override

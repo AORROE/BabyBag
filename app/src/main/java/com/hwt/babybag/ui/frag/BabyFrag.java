@@ -1,6 +1,9 @@
 package com.hwt.babybag.ui.frag;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -27,13 +30,22 @@ import com.hwt.babybag.MyApplication;
 import com.hwt.babybag.R;
 import com.hwt.babybag.adapter.VideoAdapter;
 import com.hwt.babybag.adapter.VideoItem;
+import com.hwt.babybag.bean.BaseEntity;
 import com.hwt.babybag.bean.ChildInfoBean;
 import com.hwt.babybag.bean.UserInfo;
+import com.hwt.babybag.network.RetrofitFactory;
 import com.hwt.babybag.utils.ChooseChildDialog;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Time: 2018/12/25  9:11 PM
@@ -55,11 +67,15 @@ public class BabyFrag extends Fragment {
 
     private UserInfo user;
     private ChildInfoBean childs;
+    private List<ChildInfoBean> childList;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_main_baby,container,false);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("action.refreshChilds");
+        container.getContext().registerReceiver(refreshReceiver,filter);
         initView(view);
         getUserInfo();
         initData();
@@ -125,13 +141,17 @@ public class BabyFrag extends Fragment {
         }
     }
 
+    /**
+     * 选择孩子弹框
+     * @param view
+     */
     private void chooseChild(final View view){
-        chooseChildDialog = new ChooseChildDialog(view.getContext(),
-                R.style.ChooseDialog, BitmapFactory.decodeResource(getResources(), R.drawable.icon_header
-        ), childs.getChildName(), new View.OnClickListener() {
+        chooseChildDialog = new ChooseChildDialog(view.getContext(), childList,
+                new ChooseChildDialog.MyCallBack() {
             @Override
-            public void onClick(View v) {
-                Toast.makeText(view.getContext(),"1111",Toast.LENGTH_SHORT).show();
+            public void getChildId(int id) {
+                Log.i(MyApplication.TAG, "getChildId: "+ id);
+                onRefreshChild(id);
                 chooseChildDialog.dismiss();
             }
         });
@@ -163,14 +183,135 @@ public class BabyFrag extends Fragment {
         Type type = new TypeToken<UserInfo>(){}.getType();
         user = gson.fromJson(userInfo,type);
         if(user.getChildInfoBeanList().size() > 0){
+            childList = user.getChildInfoBeanList();
             childs = user.getChildInfoBeanList().get(0);
             childName.setText(childs.getChildName());
             age.setText(String.valueOf(childs.getAge()));
             characterInstructe.setText(childs.getCharacterInstructe());
-            childTag.setText(childs.getPersonLabel());
+            if(childs.getPersonLabel() != null){
+                childTag.setVisibility(View.VISIBLE);
+                childTag.setText(childs.getPersonLabel());
+            }else {
+                childTag.setVisibility(View.INVISIBLE);
+            }
         }else {
             Toast.makeText(this.getContext(),"您还没有绑定孩子",Toast.LENGTH_SHORT).show();
         }
         Log.i("arrow", "getUserInfo: "+ user.toString());
+    }
+
+    /**
+     * 刷新
+     *
+     */
+    private void onRefreshChild(int childId){
+        ChildInfoBean params = new ChildInfoBean();
+        params.setChildId(childId);
+        RetrofitFactory.getRetrofiInstace().Api()
+                .findChildById(params)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BaseEntity<ChildInfoBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(BaseEntity<ChildInfoBean> childInfoBeanBaseEntity) {
+                        if(childInfoBeanBaseEntity.getStatus() == 1){
+                            ChildInfoBean childInfoBean = childInfoBeanBaseEntity.getResult();
+                            childName.setText(childInfoBean.getChildName());
+                            age.setText(String.valueOf(childInfoBean.getAge()));
+                            characterInstructe.setText(childInfoBean.getCharacterInstructe());
+                            if(childInfoBean.getPersonLabel() != null){
+                                childTag.setVisibility(View.VISIBLE);
+                                childTag.setText(childInfoBean.getPersonLabel());
+                            }else {
+                                childTag.setVisibility(View.INVISIBLE);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    private BroadcastReceiver refreshReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+                String action = intent.getAction();
+            Log.i(MyApplication.TAG, "onReceive: "+user.toString());
+                if(action.equals("action.refreshChilds")){
+                    onRefreshUser(user.getUserId());
+                }
+        }
+    };
+
+
+
+    private void onRefreshUser(int userId){
+//        UserInfo params = new UserInfo();
+//        params.setUserId(userId);
+        HashMap<String,Object> params = new HashMap<>();
+        params.put("userId",userId);
+        Log.i(MyApplication.TAG, "onNext: "+userId);
+        RetrofitFactory.getRetrofiInstace().Api()
+                .findOne(params)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BaseEntity<UserInfo>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(BaseEntity<UserInfo> userInfoBaseEntity) {
+                        if(userInfoBaseEntity.getStatus() == 1){
+                            UserInfo info = userInfoBaseEntity.getResult();
+                            Log.i(MyApplication.TAG, "onNext: "+info.toString());
+                            if(info.getChildInfoBeanList().size() > 0){
+                                childList = info.getChildInfoBeanList();
+                                childs = info.getChildInfoBeanList().get(0);
+                                childName.setText(childs.getChildName());
+                                age.setText(String.valueOf(childs.getAge()));
+                                characterInstructe.setText(childs.getCharacterInstructe());
+                                if(childs.getPersonLabel() != null){
+                                    childTag.setVisibility(View.VISIBLE);
+                                    childTag.setText(childs.getPersonLabel());
+                                }else {
+                                    childTag.setVisibility(View.INVISIBLE);
+                                }
+                            }else {
+                                Toast.makeText(getContext(),"您还没有绑定孩子",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void onDestroy() {
+        getContext().unregisterReceiver(refreshReceiver);
+        super.onDestroy();
     }
 }

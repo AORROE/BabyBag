@@ -17,7 +17,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.act.SplashAct" android:theme="@style/Translucent">
+        <activity android:name=".ui.act.AddChildAct"></activity>
+        <activity
+            android:name=".ui.act.SplashAct"
+            android:theme="@style/Translucent">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,7 +30,7 @@
         <activity
             android:name=".ui.act.VideoAct"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity android:name=".ui.act.ChildInfoAct" />
         <activity android:name=".ui.act.ChildManagerAct" />
         <activity android:name=".ui.act.ChangePasswordAct" />
@@ -38,11 +41,13 @@
             android:name=".ui.act.LoginAct"
             android:launchMode="singleTask"
             android:theme="@style/Translucent">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".ui.act.RegisterAct"

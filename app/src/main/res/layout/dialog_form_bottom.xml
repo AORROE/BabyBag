@@ -15,29 +15,6 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/child_choose_ll"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <com.hwt.babybag.view.CircleImageVIew
-                android:id="@+id/child_avatar_check"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_alignParentRight="true"
-                android:scaleType="centerCrop"
-                app:is_circle="true"
-                android:src="@drawable/icon_header"/>
-            <TextView
-                android:id="@+id/child_name_check"
-                android:layout_marginTop="12dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/text_color"
-                android:textSize="13sp"
-                android:text="小小"/>
-        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

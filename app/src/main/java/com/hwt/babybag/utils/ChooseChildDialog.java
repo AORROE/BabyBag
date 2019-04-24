@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.hwt.babybag.R;
 import com.hwt.babybag.bean.ChildInfoBean;
 
@@ -67,7 +68,13 @@ public class ChooseChildDialog extends Dialog{
                     }
                 });
                 TextView child_name_check = view.findViewById(R.id.child_name_check);
+                ImageView child_avatar_check = view.findViewById(R.id.child_avatar_check);
                 child_name_check.setText(child.getChildName());
+                if(child.getPhoto() != null){
+                    Glide.with(view).load(child.getPhoto()).into(child_avatar_check);
+                }else {
+                    child_avatar_check.setImageResource(R.drawable.icon_zhangweitu);
+                }
                 bottom_dialog.addView(view);
             }
         }

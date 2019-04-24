@@ -105,6 +105,7 @@ public class LoginAct extends AppCompatActivity {
                             Gson gson = new Gson();
                             String userinfo = gson.toJson(userInfoBaseEntity.getResult());
                             editor.putString("USERINFO",userinfo);
+                            editor.putBoolean("ISLOGIN",true);
                             editor.commit();
                             //跳转到首页
                             Intent i2 = new Intent(LoginAct.this,MainActivity.class);

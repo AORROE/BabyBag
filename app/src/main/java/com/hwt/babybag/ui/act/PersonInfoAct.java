@@ -132,7 +132,7 @@ public class PersonInfoAct extends AppCompatActivity implements View.OnClickList
             case R.id.user_avatar_ll:
                 ChooseImg.getInstance().chooserImg(user_avatar, v.getContext(), new ChooseImg.MyCallBack() {
                     @Override
-                    public void SuccessCallBack(int code) {
+                    public void SuccessCallBack(String imgUrl) {
 
                     }
 

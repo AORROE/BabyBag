@@ -1,6 +1,8 @@
 package com.hwt.babybag.ui.act;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -20,15 +22,24 @@ public class SplashAct extends AppCompatActivity {
 
     private Handler handler = new MyHandler(this);
 
+    private Boolean isLogin = false;
+
     private Runnable mTimker = new Runnable() {
         @Override
         public void run() {
             final Intent intent;
-            intent = new Intent(SplashAct.this, LoginAct.class);
+            SharedPreferences preferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
+            if(preferences != null){
+                isLogin = preferences.getBoolean("ISLOGIN",false);
+            }
+            if(isLogin){
+                intent = new Intent(SplashAct.this, MainActivity.class);
+            }else {
+                intent = new Intent(SplashAct.this, LoginAct.class);
+            }
             if(waitTime == 0){
                 waitTime = 3;
                 handler.removeCallbacks(mTimker);
-
                 startActivity(intent);
                 finish();
             }else {

@@ -20,10 +20,12 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hwt.babybag.MyApplication;
@@ -59,7 +61,8 @@ public class BabyFrag extends Fragment {
     private List<VideoItem> list;
     private VideoAdapter myAdapter;
 
-    TextView childName,age,characterInstructe,childTag;
+    private TextView childName,age,characterInstructe,childTag;
+    private ImageView child_header_img;
 
     private Button child_change;
 
@@ -99,6 +102,7 @@ public class BabyFrag extends Fragment {
         age = view.findViewById(R.id.child_age_value);
         characterInstructe = view.findViewById(R.id.child_introduce_value);
         childTag = view.findViewById(R.id.child_tag);
+        child_header_img = view.findViewById(R.id.child_header_img);
         child_change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -188,6 +192,9 @@ public class BabyFrag extends Fragment {
             childName.setText(childs.getChildName());
             age.setText(String.valueOf(childs.getAge()));
             characterInstructe.setText(childs.getCharacterInstructe());
+            if(childs.getPhoto() != null){
+                Glide.with(getContext()).load(childs.getPhoto()).into(child_header_img);
+            }
             if(childs.getPersonLabel() != null){
                 childTag.setVisibility(View.VISIBLE);
                 childTag.setText(childs.getPersonLabel());
@@ -229,6 +236,11 @@ public class BabyFrag extends Fragment {
                                 childTag.setText(childInfoBean.getPersonLabel());
                             }else {
                                 childTag.setVisibility(View.INVISIBLE);
+                            }
+                            if(childInfoBean.getPhoto() != null){
+                                Glide.with(getContext()).load(childInfoBean.getPhoto()).into(child_header_img);
+                            }else {
+                                child_header_img.setImageResource(R.drawable.icon_zhangweitu);
                             }
                         }
                     }
@@ -290,6 +302,11 @@ public class BabyFrag extends Fragment {
                                     childTag.setText(childs.getPersonLabel());
                                 }else {
                                     childTag.setVisibility(View.INVISIBLE);
+                                }
+                                if(childs.getPhoto() != null){
+                                    Glide.with(getContext()).load(childs.getPhoto()).into(child_header_img);
+                                }else {
+                                    child_header_img.setImageResource(R.drawable.icon_zhangweitu);
                                 }
                             }else {
                                 Toast.makeText(getContext(),"您还没有绑定孩子",Toast.LENGTH_SHORT).show();

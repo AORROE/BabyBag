@@ -124,6 +124,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private UserInfo user;
 
+    private SharedPreferences sp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -170,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         startActivityForResult(intent,4);
                         break;
                     case R.id.login_out_item:
-                        Toast.makeText(MainActivity.this,"退出登录",Toast.LENGTH_SHORT).show();
+                        sp.edit().clear().commit();
                         intent = new Intent(MainActivity.this, LoginAct.class);
                         startActivity(intent);
                         finish();
@@ -240,8 +241,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.header_img:
                 ChooseImg.getInstance().chooserImg(header_img, MainActivity.this, new ChooseImg.MyCallBack() {
                     @Override
-                    public void SuccessCallBack(int code) {
-
+                    public void SuccessCallBack(String imgUrl) {
+                        updateUser(imgUrl);
                     }
 
                     @Override
@@ -254,7 +255,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.header_back:
                 ChooseImg.getInstance().chooserImg(header_back, MainActivity.this, new ChooseImg.MyCallBack() {
                     @Override
-                    public void SuccessCallBack(int code) {
+                    public void SuccessCallBack(String imgUrl) {
 
                     }
 
@@ -405,13 +406,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 获取用户信息
      */
     private void getUserInfo(){
-        SharedPreferences sp = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
+        sp = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
         Gson gson = new Gson();
         String userInfo = sp.getString("USERINFO",null);
+        String imageUrl = sp.getString("imageUrl",null);
+
         Type type = new TypeToken<UserInfo>(){}.getType();
         user = gson.fromJson(userInfo,type);
         Log.i("arrow", "getUserInfo: "+ user.toString());
         header_title.setText(user.getNickName());
+        if(user.getPhoto() != null){
+            Log.i(MyApplication.TAG, "getUserInfo: "+user.getPhoto());
+            Uri uri = Uri.parse(user.getPhoto());
+            Glide.with(this).load(uri).into(header_img);
+        }
+        if(imageUrl != null){
+            Uri imgUrl = Uri.parse(imageUrl);
+            Glide.with(MainActivity.this).load(imgUrl)
+                    .into(new ViewTarget<View,Drawable>(header_back) {
+                        @Override
+                        public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                            this.view.setBackground(resource.getCurrent());
+                        }
+                    });
+        }
+
     }
 
     /**
@@ -497,4 +516,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //            bodyLayout.getChildAt(i).setVisibility(View.GONE);
 //        }
 //    }
+
+
+    public void updateUser(String imgUrl){
+        UserInfo params = new UserInfo();
+        params.setUserId(user.getUserId());
+        params.setPhoto(imgUrl);
+        RetrofitFactory.getRetrofiInstace().Api()
+                .updateUser(params)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BaseEntity>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+                    @Override
+                    public void onNext(BaseEntity baseEntity) {
+                        Log.i(MyApplication.TAG, baseEntity.getMessage());
+                        if(baseEntity.getStatus() == 1){
+                            Toast.makeText(MyApplication.getContextObj(),baseEntity.getMessage(),Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(MyApplication.getContextObj(),baseEntity.getMessage(),Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
 }

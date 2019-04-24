@@ -65,6 +65,7 @@ public class MissionFrag extends Fragment {
         refreshLayout = view.findViewById(R.id.refresh_srl);
         //初始化数据源
         initData(view);
+        initAdapter(view);
         return view;
     }
 
@@ -141,7 +142,7 @@ public class MissionFrag extends Fragment {
                     case R.id.complete:
                         Log.i("arrow--onClick", "onItemChildClick: "+ position);
                         Button complete = view1.findViewById(R.id.complete);
-                        myDialog= new MyDialog(view.getContext(), "是否确定完成任务",
+                        myDialog = new MyDialog(view.getContext(), "是否确定完成任务",
                                 "确定",
                                 "取消",
                                 new View.OnClickListener() {

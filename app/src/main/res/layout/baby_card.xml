@@ -121,6 +121,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/child_introduce_tag"
+                android:textSize="@dimen/text_size"
+                android:maxLines="1"
                 android:text="@string/no_data"/>
         </RelativeLayout>
     </LinearLayout>

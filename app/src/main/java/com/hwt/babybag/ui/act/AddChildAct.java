@@ -17,6 +17,7 @@ import com.hwt.babybag.R;
 import com.hwt.babybag.bean.BaseEntity;
 import com.hwt.babybag.bean.ChildInfoBean;
 import com.hwt.babybag.network.RetrofitFactory;
+import com.hwt.babybag.utils.ChooseImg;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,6 +53,8 @@ public class AddChildAct extends AppCompatActivity implements View.OnClickListen
     @BindView(R.id.bind_child)
     public Button bindChild;
 
+    private String imgUrl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +68,7 @@ public class AddChildAct extends AppCompatActivity implements View.OnClickListen
         icon_menu.setImageResource(R.drawable.icon_left_arrow);
         icon_menu.setOnClickListener(this);
         bindChild.setOnClickListener(this);
+        child_avatar_ll.setOnClickListener(this);
         child_name.setSelection(child_name.getText().toString().trim().length());
         child_age.setSelection(child_age.getText().toString().trim().length());
         child_instruction.setSelection(child_instruction.getText().toString().trim().length());
@@ -76,6 +80,17 @@ public class AddChildAct extends AppCompatActivity implements View.OnClickListen
                 finish();
                 break;
             case R.id.child_avatar_ll:
+                ChooseImg.getInstance().chooserImg(child_avatar, AddChildAct.this, new ChooseImg.MyCallBack() {
+                    @Override
+                    public void SuccessCallBack(String imgUrl) {
+                        setImgUrl(imgUrl);
+                    }
+
+                    @Override
+                    public void failCallBack(int code) {
+
+                    }
+                });
                 break;
             case R.id.child_sex_ll:
                 break;
@@ -99,6 +114,9 @@ public class AddChildAct extends AppCompatActivity implements View.OnClickListen
             params.setSex(1);
         }
         params.setCharacterInstructe(child_instruction.getText().toString());
+        if(imgUrl != null){
+            params.setPhoto(getImgUrl());
+        }
         RetrofitFactory.getRetrofiInstace().Api()
                 .addChild(params)
                 .subscribeOn(Schedulers.io())
@@ -134,5 +152,13 @@ public class AddChildAct extends AppCompatActivity implements View.OnClickListen
 
                     }
                 });
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 }

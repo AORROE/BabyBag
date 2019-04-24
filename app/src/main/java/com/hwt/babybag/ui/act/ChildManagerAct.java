@@ -1,6 +1,7 @@
 package com.hwt.babybag.ui.act;
 
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemSwipeListener;
 import com.hwt.babybag.MyApplication;
 import com.hwt.babybag.R;
 import com.hwt.babybag.adapter.ChildAdapter;
@@ -93,9 +95,10 @@ public class ChildManagerAct extends AppCompatActivity implements View.OnClickLi
                 Intent intent = new Intent(ChildManagerAct.this,ChildInfoAct.class);
                 intent.putExtra("childName",list.get(position));
                 intent.putExtra("childInfo",childsList.get(position));
-                startActivity(intent);
+                startActivityForResult(intent,0);
             }
         });
+
     }
 
 
@@ -183,6 +186,7 @@ public class ChildManagerAct extends AppCompatActivity implements View.OnClickLi
             case 0:
                 onRefreshUser(userInfo.getUserId());
                 adapter.notifyDataSetChanged();
+                Log.i(MyApplication.TAG, "onActivityResult: ");
                 break;
         }
     }

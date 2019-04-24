@@ -9,9 +9,12 @@ import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 public interface IHttpInterface {
 
@@ -36,6 +39,9 @@ public interface IHttpInterface {
     @POST("child/addChild")
     Observable<BaseEntity> addChild(@Body ChildInfoBean params);
 
+    @POST("child/deleteChildById")
+    Observable<BaseEntity> deleteChildById(@Body ChildInfoBean params);
+
     @POST("application/commitApplication")
     Observable<BaseEntity> commitApplication(@Body Map<String,Object> params);
 
@@ -44,4 +50,8 @@ public interface IHttpInterface {
 
     @POST("mission/modifyComplete")
     Observable<BaseEntity> modifyComplete(@Body Map<String,Object> params);
+
+    @Multipart
+    @POST("user/uploadImg")
+    Observable<BaseEntity<String>> uploadImg(@Part MultipartBody.Part multipart);
 }

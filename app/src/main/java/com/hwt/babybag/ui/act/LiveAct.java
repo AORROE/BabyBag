@@ -43,7 +43,7 @@ public class LiveAct extends AppCompatActivity implements View.OnClickListener {
             case R.id.cover_img:
                 ChooseImg.getInstance().chooserImg(cover_img, this, new ChooseImg.MyCallBack() {
                     @Override
-                    public void SuccessCallBack(int code) {
+                    public void SuccessCallBack(String imgUrl) {
                         tip_text.setVisibility(View.GONE);
                     }
 

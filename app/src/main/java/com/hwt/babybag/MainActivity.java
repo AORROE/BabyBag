@@ -41,6 +41,7 @@ import com.hwt.babybag.network.RetrofitFactory;
 import com.hwt.babybag.ui.IImagePicker;
 import com.hwt.babybag.ui.act.ChangePasswordAct;
 import com.hwt.babybag.ui.act.ChildManagerAct;
+import com.hwt.babybag.ui.act.LiveAct;
 import com.hwt.babybag.ui.act.LoginAct;
 import com.hwt.babybag.ui.act.PersonInfoAct;
 import com.hwt.babybag.ui.act.UserCheckAct;
@@ -228,15 +229,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 selectDisplayView(3);
                 break;
             case R.id.icon_live:
-                Intent intent = new Intent(MainActivity.this,UserCheckAct.class);
+                Intent intent = null;
+                if(user.getIsLive() == 0){
+                    intent = new Intent(MainActivity.this,UserCheckAct.class);
+                }else {
+                    intent = new Intent(this, LiveAct.class);
+                }
                 startActivity(intent);
                 break;
             case R.id.header_img:
-                ChooseImg.getInstance().chooserImg(header_img,MainActivity.this);
+                ChooseImg.getInstance().chooserImg(header_img, MainActivity.this, new ChooseImg.MyCallBack() {
+                    @Override
+                    public void SuccessCallBack(int code) {
+
+                    }
+
+                    @Override
+                    public void failCallBack(int code) {
+
+                    }
+                });
                 Toast.makeText(MainActivity.this,"test",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.header_back:
-                ChooseImg.getInstance().chooserImg(header_back,MainActivity.this);
+                ChooseImg.getInstance().chooserImg(header_back, MainActivity.this, new ChooseImg.MyCallBack() {
+                    @Override
+                    public void SuccessCallBack(int code) {
+
+                    }
+
+                    @Override
+                    public void failCallBack(int code) {
+
+                    }
+                });
                 Toast.makeText(MainActivity.this,"test",Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -266,6 +292,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(i == 2){
             icon_live.setVisibility(View.VISIBLE);
             icon_live.setOnClickListener(this);
+
         }else {
             icon_live.setVisibility(View.INVISIBLE);
         }

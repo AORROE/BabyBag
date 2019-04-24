@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/activity_nav_tools_bar"/>
+
+    <FrameLayout
+        android:id="@+id/cover_url_fl"
+        android:layout_width="match_parent"
+        android:layout_height="250dp">
+        <ImageView
+            android:id="@+id/cover_img"
+            android:layout_width="match_parent"
+            android:src="@drawable/icon_zhangweitu"
+            android:layout_height="250dp"
+            android:scaleType="fitCenter"/>
+        <!--<ImageView-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_width="80dp"-->
+            <!--android:layout_height="80dp"-->
+            <!--android:src="@drawable/icon_add"/>-->
+        <TextView
+            android:id="@+id/tip_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请选择直播封面"
+            android:textColor="@color/text_color"
+            android:layout_gravity="center"/>
+    </FrameLayout>
+    <LinearLayout
+        android:id="@+id/live_title_ll"
+        android:orientation="vertical"
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:padding="12dp">
+            <EditText
+                android:id="@+id/live_title_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:textSize="@dimen/text_size"
+                android:textColor="@color/text_color"
+                android:textCursorDrawable="@drawable/cursor_color"
+                android:hint="请输入直播标题"
+                android:maxLines="1"
+                android:singleLine="true"/>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#e1e1e1"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/start_live"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:textColor="@color/white"
+        android:background="@drawable/submit_btn_shape"
+        android:text="开始直播"/>
+
+</LinearLayout>

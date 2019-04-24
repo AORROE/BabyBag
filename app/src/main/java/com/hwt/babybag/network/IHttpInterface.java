@@ -2,12 +2,15 @@ package com.hwt.babybag.network;
 
 import com.hwt.babybag.bean.BaseEntity;
 import com.hwt.babybag.bean.ChildInfoBean;
+import com.hwt.babybag.bean.MissionBean;
 import com.hwt.babybag.bean.UserInfo;
 
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface IHttpInterface {
@@ -36,4 +39,9 @@ public interface IHttpInterface {
     @POST("application/commitApplication")
     Observable<BaseEntity> commitApplication(@Body Map<String,Object> params);
 
+    @GET("mission/getAllMission")
+    Observable<BaseEntity<List<MissionBean>>>  getAllMission();
+
+    @POST("mission/modifyComplete")
+    Observable<BaseEntity> modifyComplete(@Body Map<String,Object> params);
 }

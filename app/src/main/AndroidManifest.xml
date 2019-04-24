@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.act.AddChildAct"></activity>
+        <activity android:name=".ui.act.LiveAct"></activity>
+        <activity android:name=".ui.act.AddChildAct" />
         <activity
             android:name=".ui.act.SplashAct"
             android:theme="@style/Translucent">

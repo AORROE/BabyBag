@@ -130,7 +130,17 @@ public class PersonInfoAct extends AppCompatActivity implements View.OnClickList
                 }
                 break;
             case R.id.user_avatar_ll:
-                ChooseImg.getInstance().chooserImg(user_avatar,v.getContext());
+                ChooseImg.getInstance().chooserImg(user_avatar, v.getContext(), new ChooseImg.MyCallBack() {
+                    @Override
+                    public void SuccessCallBack(int code) {
+
+                    }
+
+                    @Override
+                    public void failCallBack(int code) {
+
+                    }
+                });
                 break;
             case R.id.user_nickname_ll:
                 if(changeNicknameFrag == null){

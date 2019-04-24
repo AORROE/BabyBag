@@ -2,6 +2,7 @@ package com.hwt.babybag.ui.act;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -55,13 +56,9 @@ public class ChildManagerAct extends AppCompatActivity implements View.OnClickLi
         icon_menu.setOnClickListener(this);
         Intent intent = getIntent();
         userInfo = intent.getParcelableExtra("USERINFO");
-        initData();
-//        onRefreshUser(userInfo.getUserId());
-        adapter = new ChildAdapter(R.layout.child_manager_item,list);
-        adapter.addFooterView(getView());
-        jumpToChildInfo();
-        child_rv.setLayoutManager(new LinearLayoutManager(this));
-        child_rv.setAdapter(adapter);
+//        initData();
+        onRefreshUser(userInfo.getUserId());
+
 
     }
     //数据源
@@ -86,7 +83,7 @@ public class ChildManagerAct extends AppCompatActivity implements View.OnClickLi
     private void bindChild(){
         Intent intent = new Intent(ChildManagerAct.this,AddChildAct.class);
         intent.putExtra("userId",userInfo.getUserId());
-        startActivity(intent);
+        startActivityForResult(intent,0);
     }
 
     private void jumpToChildInfo(){
@@ -130,51 +127,63 @@ public class ChildManagerAct extends AppCompatActivity implements View.OnClickLi
     }
 
 
-//    private void onRefreshUser(int userId){
-//        list = new ArrayList<>();
-//        HashMap<String,Object> params = new HashMap<>();
-//        params.put("userId",userId);
-//        Log.i(MyApplication.TAG, "onNext: "+userId);
-//        RetrofitFactory.getRetrofiInstace().Api()
-//                .findOne(params)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<BaseEntity<UserInfo>>() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//
-//                    }
-//                    @Override
-//                    public void onNext(BaseEntity<UserInfo> userInfoBaseEntity) {
-//
-//                        if(userInfoBaseEntity.getStatus() == 1){
-//                            UserInfo info = userInfoBaseEntity.getResult();
-//                            Log.i(MyApplication.TAG, "onNext: "+info.toString());
-////                            if(info.getChildInfoBeanList().size() > 0){
-////                                childsList = info.getChildInfoBeanList();
-////                                list = new ArrayList<>();
-////                                for(int i = 0; i <childsList.size();i++){
-////                                    list.add(childsList.get(i).getChildName());
-////                                }
-////                            }else {
-////                                childsList = new ArrayList<>();
-////                            }
-//                            for(int i = 0; i <info.getChildInfoBeanList().size();i++){
-//                                list.add("111");
-//                                Log.i(MyApplication.TAG, "111: "+info.getChildInfoBeanList().get(i).toString());
-//                            }
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//
-//                    }
-//                });
-//    }
+    private void onRefreshUser(int userId){
+        HashMap<String,Object> params = new HashMap<>();
+        params.put("userId",userId);
+        Log.i(MyApplication.TAG, "onNext: "+userId);
+        RetrofitFactory.getRetrofiInstace().Api()
+                .findOne(params)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BaseEntity<UserInfo>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        Log.i(MyApplication.TAG, "onSubscribe: ");
+                    }
+                    @Override
+                    public void onNext(BaseEntity<UserInfo> userInfoBaseEntity) {
+                        Log.i(MyApplication.TAG, "onNext: "+userInfoBaseEntity.getStatus());
+                        Log.i(MyApplication.TAG, "onNext: "+userInfoBaseEntity.getMessage());
+                        Log.i(MyApplication.TAG, "onNext: "+userInfoBaseEntity.getResult().toString());
+                        if(userInfoBaseEntity.getStatus() == 1){
+                            userInfo = userInfoBaseEntity.getResult();
+                            childsList = userInfo.getChildInfoBeanList();
+                            list = new ArrayList<>();
+                            if(childsList.size() > 0){
+                                for(int i = 0; i <childsList.size();i++){
+                                    list.add(childsList.get(i).getChildName());
+                                }
+                            }else {
+                                childsList = new ArrayList<>();
+                            }
+                            adapter = new ChildAdapter(R.layout.child_manager_item,list);
+                            adapter.addFooterView(getView());
+                            jumpToChildInfo();
+                            child_rv.setLayoutManager(new LinearLayoutManager(ChildManagerAct.this));
+                            child_rv.setAdapter(adapter);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.i(MyApplication.TAG, "onError: "+e.toString());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (resultCode){
+            case 0:
+                onRefreshUser(userInfo.getUserId());
+                adapter.notifyDataSetChanged();
+                break;
+        }
+    }
 }

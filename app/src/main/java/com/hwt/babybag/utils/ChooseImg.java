@@ -36,7 +36,7 @@ public class ChooseImg {
      * @param view
      */
     @SuppressLint("CheckResult")
-    public void chooserImg(View view, Context context){
+    public void chooserImg(View view, Context context,MyCallBack callBack){
         RxImagePicker.INSTANCE.create(IImagePicker.class)
                 .openGallery(context)
                 .subscribe(new Consumer<Result>() {
@@ -46,7 +46,9 @@ public class ChooseImg {
                         switch (view.getId()){
                             case R.id.header_img:
                             case R.id.user_avatar:
+                            case R.id.cover_img:
                                 Glide.with(context).load(uri).into((ImageView) view);
+                                callBack.SuccessCallBack(1);
                                 break;
                             case R.id.header_back:
                                 Glide.with(context).load(uri)
@@ -60,5 +62,10 @@ public class ChooseImg {
                         }
                     }
                 });
+    }
+
+    public interface MyCallBack{
+        void SuccessCallBack(int code);
+        void failCallBack(int code);
     }
 }

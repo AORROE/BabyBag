@@ -65,6 +65,7 @@ public class ChooseImg {
                             case R.id.user_avatar:
                             case R.id.cover_img:
                             case R.id.child_avatar:
+                            case R.id.found_img:
                                 Glide.with(context).load(uri).into((ImageView) view);
                                 uploadImg(uri,callBack);
                                 break;

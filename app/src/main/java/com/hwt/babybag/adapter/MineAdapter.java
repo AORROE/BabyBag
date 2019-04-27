@@ -2,8 +2,10 @@ package com.hwt.babybag.adapter;
 
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -24,17 +26,22 @@ public class MineAdapter extends BaseQuickAdapter<MineItem, BaseViewHolder> {
     protected void convert(BaseViewHolder helper, MineItem item) {
         helper.setText(R.id.mine_user_name,item.getUserName());
         helper.setText(R.id.mine_content,item.getFoundContent());
-        helper.setText(R.id.add_time,item.getAddTime());
+        helper.setText(R.id.mine_add_time,item.getAddTime());
         helper.addOnClickListener(R.id.mine_ll);
+        helper.addOnClickListener(R.id.comment_ll);
+        helper.addOnClickListener(R.id.icon_comment);
         final ImageView praise = helper.getView(R.id.icon_praise);
+        final LinearLayout content_img = helper.getView(R.id.content_img);
+        final LinearLayout praise_ll = helper.getView(R.id.praise_ll);
         final ImageView mine_user_header = helper.getView(R.id.mine_user_header);
+        final ImageView img = helper.getView(R.id.img);
 
         if(item.getIsPraise() == 1){
             praise.setSelected(true);
         }else {
             praise.setSelected(false);
         }
-        praise.setOnClickListener(new View.OnClickListener() {
+        praise_ll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(item.getIsPraise() == 0){
@@ -53,5 +60,16 @@ public class MineAdapter extends BaseQuickAdapter<MineItem, BaseViewHolder> {
         }else {
             mine_user_header.setImageResource(R.drawable.icon_zhangweitu);
         }
+
+        if(item.getFoundImg() != null){
+            img.setVisibility(View.VISIBLE);
+            item.setCheck(true);
+            Glide.with(MyApplication.getContextObj()).load(item.getFoundImg()).into(img);
+        }else {
+            item.setCheck(false);
+            img.setVisibility(View.GONE);
+        }
+
+
     }
 }

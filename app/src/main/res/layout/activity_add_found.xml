@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/colorE1"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/activity_nav_tools_bar"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:padding="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/found_content"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:gravity="start"
+            android:textSize="@dimen/text_size"
+            android:textColor="@color/text_color"
+            android:hint="请输入内容"
+            android:background="@null"/>
+
+        <LinearLayout
+            android:id="@+id/add_img_ll"
+            android:gravity="center"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="@drawable/add_img_ll">
+            <ImageView
+                android:id="@+id/add_img"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/icon_add"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/found_img"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/icon_zhangweitu"
+            android:visibility="gone"/>
+    </LinearLayout>
+    <Button
+        android:id="@+id/publish_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:textColor="@color/white"
+        android:background="@drawable/submit_btn_shape"
+        android:text="发布"/>
+
+</LinearLayout>

@@ -5,8 +5,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.hwt.babybag.MyApplication;
 import com.hwt.babybag.R;
 import com.hwt.babybag.bean.MissionBean;
 
@@ -30,13 +32,14 @@ public class MissionAdapter extends BaseQuickAdapter<MissionBean, BaseViewHolder
     @Override
     protected void convert(final BaseViewHolder helper, final MissionBean item) {
         helper.setText(R.id.user_name,item.getUserName());
-//        helper.setText(R.id.add_time,item.getAddtime());
+        helper.setText(R.id.add_time,item.getAddtime());
         helper.setText(R.id.mission_content,item.getContent());
 //        helper.setImageBitmap(R.id.user_header,item.getUserHeader());
         helper.addOnClickListener(R.id.complete);
         helper.addOnClickListener(R.id.mission_ll);
         helper.addOnClickListener(R.id.icon_praise);
         final ImageView praise = helper.getView(R.id.icon_praise);
+        final ImageView user_header = helper.getView(R.id.user_header);
         Button complete = helper.getView(R.id.complete);
         if(item.getIsParise() == 1){
             praise.setSelected(true);
@@ -68,6 +71,14 @@ public class MissionAdapter extends BaseQuickAdapter<MissionBean, BaseViewHolder
                 }
             }
         });
+
+        if(item.getUserHeader() != null){
+            item.setIscheck(true);
+            Glide.with(MyApplication.getContextObj()).load(item.getUserHeader()).into(user_header);
+        }else {
+            item.setIscheck(false);
+            user_header.setImageResource(R.drawable.icon_zhangweitu);
+        }
     }
 
     public interface OnItemPraiseListener{

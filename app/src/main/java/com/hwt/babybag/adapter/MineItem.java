@@ -98,4 +98,20 @@ public class MineItem {
     public void setCheck(Boolean check) {
         isCheck = check;
     }
+
+    @Override
+    public String toString() {
+        return "MineItem{" +
+                "foundId=" + foundId +
+                ", userId=" + userId +
+                ", commentId=" + commentId +
+                ", userName='" + userName + '\'' +
+                ", userPhoto='" + userPhoto + '\'' +
+                ", foundContent='" + foundContent + '\'' +
+                ", foundImg='" + foundImg + '\'' +
+                ", addTime='" + addTime + '\'' +
+                ", isPraise=" + isPraise +
+                ", isCheck=" + isCheck +
+                '}';
+    }
 }

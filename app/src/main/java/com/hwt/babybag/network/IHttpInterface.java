@@ -47,8 +47,8 @@ public interface IHttpInterface {
     @POST("application/commitApplication")
     Observable<BaseEntity> commitApplication(@Body Map<String,Object> params);
 
-    @GET("mission/getAllMission")
-    Observable<BaseEntity<List<MissionBean>>> getAllMission();
+    @POST("mission/getAllMission")
+    Observable<BaseEntity<List<MissionBean>>> getAllMission(@Body Map<String,Object> params);
 
     @POST("mission/modifyComplete")
     Observable<BaseEntity> modifyComplete(@Body Map<String,Object> params);
@@ -57,6 +57,9 @@ public interface IHttpInterface {
     @POST("user/uploadImg")
     Observable<BaseEntity<String>> uploadImg(@Part MultipartBody.Part multipart);
 
-    @GET("found/getAllFound")
-    Observable<BaseEntity<List<MineItem>>> getAllFound();
+    @POST("found/getAllFound")
+    Observable<BaseEntity<List<MineItem>>> getAllFound(@Body Map<String,Object> params);
+
+    @POST("found/addFound")
+    Observable<BaseEntity> addFound(@Body MineItem params);
 }

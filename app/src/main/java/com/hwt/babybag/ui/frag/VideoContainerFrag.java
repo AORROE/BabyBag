@@ -20,6 +20,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hwt.babybag.R;
 import com.hwt.babybag.adapter.VideoAdapter;
 import com.hwt.babybag.adapter.VideoItem;
+import com.hwt.babybag.ui.act.Video2Act;
 import com.hwt.babybag.ui.act.VideoAct;
 
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class VideoContainerFrag extends Fragment {
         rv_video = view.findViewById(R.id.video_rv);
         initData();
         initAdapter(view);
-        GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(),2);
+        GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(),1);
         rv_video.setLayoutManager(layoutManager);
         rv_video.setAdapter(myAdapter);
         Log.i("arrow", "getPageType: "+ getPageType());
@@ -80,11 +81,16 @@ public class VideoContainerFrag extends Fragment {
         myAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view1, int position) {
-                Intent videoIntent = new Intent(view.getContext(), VideoAct.class);
+                Intent videoIntent;
+                if(getPageType() == 0){
+                    videoIntent = new Intent(view.getContext(), Video2Act.class);
+                }else {
+                    videoIntent = new Intent(view.getContext(), VideoAct.class);
+                }
                 startActivity(videoIntent);
             }
         });
-        myAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
+        myAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
         myAdapter.isFirstOnly(false);
     }
 

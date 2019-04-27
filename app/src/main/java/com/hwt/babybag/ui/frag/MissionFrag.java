@@ -1,6 +1,8 @@
 package com.hwt.babybag.ui.frag;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -55,7 +57,7 @@ public class MissionFrag extends Fragment {
     RecyclerView.LayoutManager layoutManager;
     View view;
     MyDialog myDialog = null;
-
+    int userId;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,6 +65,8 @@ public class MissionFrag extends Fragment {
         rv_mission = view.findViewById(R.id.mission_rv);
         layoutManager = new LinearLayoutManager(view.getContext());
         refreshLayout = view.findViewById(R.id.refresh_srl);
+        SharedPreferences sp = getContext().getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
+        userId = sp.getInt("userId",0);
         //初始化数据源
         initData(view);
         initAdapter(view);
@@ -98,8 +102,10 @@ public class MissionFrag extends Fragment {
      */
     private void initData(final View view){
         missionData = new ArrayList<>();
+        HashMap<String,Object> params = new HashMap<>();
+        params.put("userId",userId);
         RetrofitFactory.getRetrofiInstace().Api()
-                .getAllMission()
+                .getAllMission(params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BaseEntity<List<MissionBean>>>() {
@@ -182,8 +188,10 @@ public class MissionFrag extends Fragment {
     }
 
     private void onRefreshData(){
+        HashMap<String,Object> params = new HashMap<>();
+        params.put("userId",userId);
         RetrofitFactory.getRetrofiInstace().Api()
-                .getAllMission()
+                .getAllMission(params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BaseEntity<List<MissionBean>>>() {

@@ -52,6 +52,7 @@ import com.hwt.babybag.ui.frag.VideoFrag;
 import com.hwt.babybag.utils.ChooseImg;
 import com.qingmei2.rximagepicker.core.RxImagePicker;
 import com.qingmei2.rximagepicker.entity.Result;
+import com.tencent.rtmp.TXLiveBase;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -129,6 +130,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //测试直播sdk是否集成成功
+//        String sdkver = TXLiveBase.getSDKVersionStr();
+//        Log.d("arrow", "onCreate: " + sdkver);
         ButterKnife.bind(this);
         setHalfTransparent();
         setStatusBarFullTransparent();
@@ -413,6 +417,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Type type = new TypeToken<UserInfo>(){}.getType();
         user = gson.fromJson(userInfo,type);
+        sp.edit().putInt("userId",user.getUserId()).commit();
         Log.i("arrow", "getUserInfo: "+ user.toString());
         header_title.setText(user.getNickName());
         if(user.getPhoto() != null){

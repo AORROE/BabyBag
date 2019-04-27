@@ -25,6 +25,10 @@ import com.bumptech.glide.request.target.Target;
 import com.hwt.babybag.R;
 import com.hwt.babybag.view.IJklayerVideoView;
 import com.hwt.babybag.view.VideoListener;
+import com.tencent.rtmp.TXLivePlayer;
+import com.tencent.rtmp.TXLivePushConfig;
+import com.tencent.rtmp.TXLivePusher;
+import com.tencent.rtmp.ui.TXCloudVideoView;
 
 import java.io.IOException;
 
@@ -32,11 +36,14 @@ import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 
-public class VideoAct extends AppCompatActivity implements VideoListener {
+public class VideoAct extends AppCompatActivity {
     private JzvdStd jzvdStd;
     private ImageView noCompleteImg;
 
     private IJklayerVideoView videoView;
+
+    private TXCloudVideoView txCloudVideoView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setStatusBarFullTransparent();
@@ -52,7 +59,6 @@ public class VideoAct extends AppCompatActivity implements VideoListener {
 //            Toast.makeText(this,"播放失败",Toast.LENGTH_SHORT);
 //            e.printStackTrace();
 //        }
-
         videoView();
     }
 
@@ -129,38 +135,5 @@ public class VideoAct extends AppCompatActivity implements VideoListener {
         }
     }
 
-    @Override
-    public void onBufferingUpdate(IMediaPlayer iMediaPlayer, int i) {
 
-    }
-
-    @Override
-    public void onCompletion(IMediaPlayer iMediaPlayer) {
-
-    }
-
-    @Override
-    public boolean onError(IMediaPlayer iMediaPlayer, int i, int i1) {
-        return false;
-    }
-
-    @Override
-    public boolean onInfo(IMediaPlayer iMediaPlayer, int i, int i1) {
-        return false;
-    }
-
-    @Override
-    public void onPrepared(IMediaPlayer iMediaPlayer) {
-        videoView.start();
-    }
-
-    @Override
-    public void onSeekComplete(IMediaPlayer iMediaPlayer) {
-
-    }
-
-    @Override
-    public void onVideoSizeChanged(IMediaPlayer iMediaPlayer, int i, int i1, int i2, int i3) {
-
-    }
 }

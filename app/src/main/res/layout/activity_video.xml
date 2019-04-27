@@ -11,6 +11,10 @@
         android:id="@+id/video_player"
         android:layout_width="match_parent"
         android:layout_height="250dp"/>
+    <!--<com.hwt.babybag.view.IJklayerVideoView-->
+        <!--android:id="@+id/video"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="250dp"/>-->
 
     <LinearLayout
         android:orientation="vertical"

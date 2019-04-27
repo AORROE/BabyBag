@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
         app:cardCornerRadius="10dp"
-        app:contentPadding="12dp">
+        app:contentPadding="12dp"
+        app:contentPaddingBottom="0dp">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -39,7 +40,7 @@
                     android:text="何老师"/>
 
                 <TextView
-                    android:id="@+id/add_time"
+                    android:id="@+id/mine_add_time"
                     android:layout_centerInParent="true"
                     android:layout_alignParentRight="true"
                     android:layout_width="wrap_content"
@@ -57,16 +58,19 @@
                 android:textColor="@color/text_color"
                 android:layout_centerInParent="true"
                 android:layout_alignParentLeft="true"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="10dp"
-                android:text="任务内容:"/>
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"/>
 
             <LinearLayout
                 android:id="@+id/content_img"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
+                <ImageView
+                    android:id="@+id/img"
+                    android:layout_width="220dp"
+                    android:layout_height="200dp"
+                    android:scaleType="center"/>
             </LinearLayout>
 
             <LinearLayout
@@ -75,6 +79,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp">
                 <LinearLayout
+                    android:id="@+id/comment_ll"
                     android:gravity="center"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -90,6 +95,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/praise_ll"
                     android:gravity="center"
                     android:layout_width="0dp"
                     android:layout_weight="1"

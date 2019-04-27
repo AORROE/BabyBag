@@ -1,5 +1,8 @@
 package com.hwt.babybag.ui.frag;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,9 +28,12 @@ import com.hwt.babybag.bean.BaseEntity;
 import com.hwt.babybag.bean.FoundBean;
 import com.hwt.babybag.bean.MissionBean;
 import com.hwt.babybag.network.RetrofitFactory;
+import com.hwt.babybag.ui.act.AddFoundAct;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -48,12 +54,12 @@ public class MineFrag extends Fragment implements View.OnClickListener {
 
     RecyclerView.LayoutManager layoutManager;
     LinearLayout mine_ll;
-
+     private View view;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main_mine,container,false);
+        view = inflater.inflate(R.layout.fragment_main_mine,container,false);
         rv_mine = view.findViewById(R.id.mine_rv);
         publish_fab = view.findViewById(R.id.publish_fab);
         publish_fab.setOnClickListener(this);
@@ -82,6 +88,10 @@ public class MineFrag extends Fragment implements View.OnClickListener {
                     case R.id.mine_ll:
                         Toast.makeText(getContext(),"test",Toast.LENGTH_SHORT).show();
                         break;
+                    case R.id.icon_comment:
+                    case R.id.comment_ll:
+                        Toast.makeText(getContext(),"icon_comment" + position,Toast.LENGTH_SHORT).show();
+                        break;
                 }
             }
         });
@@ -89,11 +99,12 @@ public class MineFrag extends Fragment implements View.OnClickListener {
 
     private void initData(View view){
         mineData = new ArrayList<>();
-//        for (int i = 0;i<10;i++){
-//            mineData.add(new MineItem());
-//        }
+        SharedPreferences sp = getContext().getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
+        int userId = sp.getInt("userId",0);
+        HashMap<String ,Object> params = new HashMap<>();
+        params.put("userId",userId);
         RetrofitFactory.getRetrofiInstace().Api()
-                .getAllFound()
+                .getAllFound(params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BaseEntity<List<MineItem>>>() {
@@ -107,6 +118,10 @@ public class MineFrag extends Fragment implements View.OnClickListener {
                         if(listBaseEntity.getStatus() == 1){
                             mineData = listBaseEntity.getResult();
                             initAdapter(view);
+                        }
+
+                        for (MineItem item : listBaseEntity.getResult()){
+                            Log.i(MyApplication.TAG, "onNext: "+item.toString());
                         }
                     }
 
@@ -126,8 +141,24 @@ public class MineFrag extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.publish_fab:
-                Toast.makeText(getContext(),"testFab",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getContext(), AddFoundAct.class);
+                startActivityForResult(intent,0);
                 break;
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (resultCode){
+            case 0:
+                Log.i(MyApplication.TAG, "onActivityResult: "+ resultCode);
+                refreshList();
+                break;
+        }
+    }
+
+    private void refreshList(){
+        initData(view);
     }
 }

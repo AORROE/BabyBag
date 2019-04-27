@@ -32,11 +32,17 @@ public class VideoContainerFrag extends Fragment {
     private RecyclerView rv_video;
     private List<VideoItem> list;
     private VideoAdapter myAdapter;
+    private View view;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_tab,container,false);
+       if(getPageType() == 0){
+           view = inflater.inflate(R.layout.fragment_tab,container,false);
+       }else {
+           view = inflater.inflate(R.layout.fragment_tab2,container,false);
+       }
+
         rv_video = view.findViewById(R.id.video_rv);
         initData();
         initAdapter(view);

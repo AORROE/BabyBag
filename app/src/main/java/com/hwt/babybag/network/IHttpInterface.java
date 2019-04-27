@@ -1,7 +1,9 @@
 package com.hwt.babybag.network;
 
+import com.hwt.babybag.adapter.MineItem;
 import com.hwt.babybag.bean.BaseEntity;
 import com.hwt.babybag.bean.ChildInfoBean;
+import com.hwt.babybag.bean.FoundBean;
 import com.hwt.babybag.bean.MissionBean;
 import com.hwt.babybag.bean.UserInfo;
 
@@ -46,7 +48,7 @@ public interface IHttpInterface {
     Observable<BaseEntity> commitApplication(@Body Map<String,Object> params);
 
     @GET("mission/getAllMission")
-    Observable<BaseEntity<List<MissionBean>>>  getAllMission();
+    Observable<BaseEntity<List<MissionBean>>> getAllMission();
 
     @POST("mission/modifyComplete")
     Observable<BaseEntity> modifyComplete(@Body Map<String,Object> params);
@@ -54,4 +56,7 @@ public interface IHttpInterface {
     @Multipart
     @POST("user/uploadImg")
     Observable<BaseEntity<String>> uploadImg(@Part MultipartBody.Part multipart);
+
+    @GET("found/getAllFound")
+    Observable<BaseEntity<List<MineItem>>> getAllFound();
 }

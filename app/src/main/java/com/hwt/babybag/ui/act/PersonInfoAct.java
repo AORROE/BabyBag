@@ -7,11 +7,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.hwt.babybag.MyApplication;
@@ -21,6 +26,7 @@ import com.hwt.babybag.bean.UserInfo;
 import com.hwt.babybag.network.RetrofitFactory;
 import com.hwt.babybag.ui.frag.ChangeNicknameFrag;
 import com.hwt.babybag.utils.ChooseImg;
+import com.hwt.babybag.utils.ChooseSexDialog;
 
 import java.util.HashMap;
 
@@ -62,6 +68,8 @@ public class PersonInfoAct extends AppCompatActivity implements View.OnClickList
     public LinearLayout user_birthday_ll;
     @BindView(R.id.user_sign_ll)
     public LinearLayout user_sign_ll;
+    @BindView(R.id.save_user_info)
+    public Button save_user_info;
 
     private ChangeNicknameFrag changeNicknameFrag;
     private Fragment flagFrag;
@@ -70,6 +78,10 @@ public class PersonInfoAct extends AppCompatActivity implements View.OnClickList
 
     private int userId;
     UserInfo userInfo;
+
+    private ChooseSexDialog dialog;
+
+    private String imageUrl = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,13 +107,6 @@ public class PersonInfoAct extends AppCompatActivity implements View.OnClickList
         }
         userId = userInfo.getUserId();
         onRefreshUser(userId);
-//        user_nickname.setText(userInfo.getNickName());
-//        user_sign.setText(userInfo.getIndividualitySign());
-//        if(userInfo.getSex() == 0){
-//            user_sex.setText("男");
-//        }else {
-//            user_sex.setText("女");
-//        }
     }
 
     private void setListener(){
@@ -112,6 +117,7 @@ public class PersonInfoAct extends AppCompatActivity implements View.OnClickList
         user_birthday_ll.setOnClickListener(this);
         user_sign_ll.setOnClickListener(this);
         saveText.setOnClickListener(this);
+        save_user_info.setOnClickListener(this);
     }
 
 
@@ -133,7 +139,7 @@ public class PersonInfoAct extends AppCompatActivity implements View.OnClickList
                 ChooseImg.getInstance().chooserImg(user_avatar, v.getContext(), new ChooseImg.MyCallBack() {
                     @Override
                     public void SuccessCallBack(String imgUrl) {
-
+                        imageUrl = imgUrl;
                     }
 
                     @Override
@@ -153,6 +159,35 @@ public class PersonInfoAct extends AppCompatActivity implements View.OnClickList
 
                 break;
             case R.id.user_sex_ll:
+                dialog = new ChooseSexDialog(this, new ChooseSexDialog.SexCallBack() {
+                    @Override
+                    public void getSex(int id) {
+                        switch (id){
+                            case 0:
+                                user_sex.setText("男");
+                                break;
+                            case 1:
+                                user_sex.setText("女");
+                                break;
+                            case 2:
+                                break;
+                        }
+                        dialog.dismiss();
+                    }
+                });
+                Window dialogWindow = dialog.getWindow();
+                if (dialogWindow != null) {
+                    WindowManager.LayoutParams attr = dialogWindow.getAttributes();
+                    if (attr != null) {
+                        attr.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                        attr.width = WindowManager.LayoutParams.MATCH_PARENT;
+                        attr.gravity = Gravity.BOTTOM;
+                        dialogWindow.setAttributes(attr);
+                        dialogWindow.setWindowAnimations(R.style.dialog_animation);
+                    }
+                }
+                dialog.setCannotBackPress();
+                dialog.show();
                 break;
             case R.id.user_birthday_ll:
                 break;
@@ -171,6 +206,9 @@ public class PersonInfoAct extends AppCompatActivity implements View.OnClickList
 //                        this.finish();
                     }
                 }
+                break;
+            case R.id.save_user_info:
+                updateUser(imageUrl,user_sex.getText().toString(),user_nickname.getText().toString());
                 break;
         }
         fragmentManager.commit();
@@ -201,6 +239,10 @@ public class PersonInfoAct extends AppCompatActivity implements View.OnClickList
                                 user_sex.setText("男");
                             }else {
                                 user_sex.setText("女");
+                            }
+                            if(info.getPhoto()!= null){
+                                Uri uri = Uri.parse(info.getPhoto());
+                                Glide.with(PersonInfoAct.this).load(uri).into(user_avatar);
                             }
 //                            Log.i(MyApplication.TAG, "onNext: "+user_nickname.getText());
                         }
@@ -239,5 +281,58 @@ public class PersonInfoAct extends AppCompatActivity implements View.OnClickList
     protected void onDestroy() {
         super.onDestroy();
         saveText.setVisibility(View.INVISIBLE);
+    }
+
+    /**
+     * 更新
+     * @param imgUrl
+     */
+    public void updateUser(String imgUrl,String sexId,String userNickName){
+        UserInfo params = new UserInfo();
+        params.setUserId(userInfo.getUserId());
+        if(imgUrl != null){
+            params.setPhoto(imgUrl);
+        }
+        if(sexId != null){
+            if(sexId.equals("男")){
+                params.setSex(0);
+            }else {
+                params.setSex(1);
+            }
+        }
+        if(userNickName != null){
+            params.setNickName(userNickName);
+        }
+        RetrofitFactory.getRetrofiInstace().Api()
+                .updateUser(params)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BaseEntity>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+                    @Override
+                    public void onNext(BaseEntity baseEntity) {
+                        Log.i(MyApplication.TAG, baseEntity.getMessage());
+                        if(baseEntity.getStatus() == 1){
+                            Toast.makeText(MyApplication.getContextObj(),baseEntity.getMessage(),Toast.LENGTH_SHORT).show();
+                            setResult(0);
+                            finish();
+                        }else {
+                            Toast.makeText(MyApplication.getContextObj(),baseEntity.getMessage(),Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }

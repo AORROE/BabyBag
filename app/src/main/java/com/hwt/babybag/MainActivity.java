@@ -430,6 +430,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
                     });
         }
+        onRefresh(user.getUserId());
 
     }
 
@@ -456,6 +457,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             UserInfo info = userInfoBaseEntity.getResult();
                             header_title.setText(info.getNickName());
 //                            Log.i(MyApplication.TAG, "onNext: "+info.getNickName());
+                            if(info.getPhoto()!= null){
+                                Uri uri = Uri.parse(info.getPhoto());
+                                Glide.with(MainActivity.this).load(uri).into(header_img);
+                            }
                         }
                     }
 
@@ -517,7 +522,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        }
 //    }
 
-
+    /**
+     * 更新用户
+     * @param imgUrl
+     */
     public void updateUser(String imgUrl){
         UserInfo params = new UserInfo();
         params.setUserId(user.getUserId());

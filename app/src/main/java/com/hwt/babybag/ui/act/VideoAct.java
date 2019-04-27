@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -21,18 +23,36 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.hwt.babybag.R;
+import com.hwt.babybag.view.IJklayerVideoView;
+import com.hwt.babybag.view.VideoListener;
+
+import java.io.IOException;
 
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
+import tv.danmaku.ijk.media.player.IMediaPlayer;
 
-public class VideoAct extends AppCompatActivity {
+public class VideoAct extends AppCompatActivity implements VideoListener {
     private JzvdStd jzvdStd;
     private ImageView noCompleteImg;
+
+    private IJklayerVideoView videoView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setStatusBarFullTransparent();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
+//        videoView = findViewById(R.id.video);
+//        videoView.setVideoListener(this);
+//        videoView.setPath("http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f30.mp4");
+//
+//        try {
+//            videoView.load();
+//        } catch (IOException e) {
+//            Toast.makeText(this,"播放失败",Toast.LENGTH_SHORT);
+//            e.printStackTrace();
+//        }
+
         videoView();
     }
 
@@ -45,14 +65,14 @@ public class VideoAct extends AppCompatActivity {
         Glide.with(VideoAct.this).load(R.drawable.no_complete)
                 .apply(options).into(noCompleteImg);
 
-        jzvdStd.setUp("http://www.jmzsjy.com/UploadFile/微课/地方风味小吃——宫廷香酥牛肉饼.mp4",
+        jzvdStd.setUp("http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f30.mp4",
                 "地方风味小吃——宫廷香酥牛肉饼",Jzvd.SCROLL_AXIS_NONE);
         jzvdStd.thumbImageView.setImageResource(R.drawable.icon_header);
         jzvdStd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 JzvdStd.startFullscreen(VideoAct.this,JzvdStd.class,
-                        "http://www.jmzsjy.com/UploadFile/微课/地方风味小吃——宫廷香酥牛肉饼.mp4",
+                        "http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f30.mp4",
                         "地方风味小吃——宫廷香酥牛肉饼");
             }
         });
@@ -109,4 +129,38 @@ public class VideoAct extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBufferingUpdate(IMediaPlayer iMediaPlayer, int i) {
+
+    }
+
+    @Override
+    public void onCompletion(IMediaPlayer iMediaPlayer) {
+
+    }
+
+    @Override
+    public boolean onError(IMediaPlayer iMediaPlayer, int i, int i1) {
+        return false;
+    }
+
+    @Override
+    public boolean onInfo(IMediaPlayer iMediaPlayer, int i, int i1) {
+        return false;
+    }
+
+    @Override
+    public void onPrepared(IMediaPlayer iMediaPlayer) {
+        videoView.start();
+    }
+
+    @Override
+    public void onSeekComplete(IMediaPlayer iMediaPlayer) {
+
+    }
+
+    @Override
+    public void onVideoSizeChanged(IMediaPlayer iMediaPlayer, int i, int i1, int i2, int i3) {
+
+    }
 }

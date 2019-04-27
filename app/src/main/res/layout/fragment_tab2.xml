@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.frag.BabyFrag">
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/mine_rv"
+        android:id="@+id/video_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/publish_fab"
@@ -20,7 +18,7 @@
         app:fabSize="normal"
         android:transitionName="loginFab"
         android:layout_marginTop="25dp"
-        android:layout_alignBottom="@+id/mine_rv"
+        android:layout_alignBottom="@+id/video_rv"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="20dp"
         android:layout_marginRight="20dp"

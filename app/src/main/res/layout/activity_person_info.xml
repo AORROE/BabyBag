@@ -223,6 +223,16 @@
                     android:layout_height="1dp"
                     android:background="#e1e1e1"/>
             </LinearLayout>
+            <Button
+                android:id="@+id/save_user_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:textColor="@color/white"
+                android:background="@drawable/submit_btn_shape"
+                android:text="保存"/>
         </LinearLayout>
     </FrameLayout>
 

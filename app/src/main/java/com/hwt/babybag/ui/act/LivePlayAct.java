@@ -1,12 +1,15 @@
 package com.hwt.babybag.ui.act;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Surface;
 import android.view.View;
 import android.widget.Button;
 
+import com.hwt.babybag.MyApplication;
 import com.hwt.babybag.R;
 import com.tencent.rtmp.TXLiveConstants;
 import com.tencent.rtmp.TXLivePushConfig;
@@ -29,9 +32,12 @@ public class LivePlayAct extends AppCompatActivity implements View.OnClickListen
 
         txLivePushConfig.enableScreenCaptureAutoRotate(true);
         txLivePusher.setConfig(txLivePushConfig);
+        Intent intent = getIntent();
 
 //        String rtmpUrl = "rtmp://47170.livepush.myqcloud.com/live/12351238?txSecret=83fc4d1774e44cdde496e1ab93ce43f9&txTime=5CC47C7F";
-        String rtmpUrl = "rtmp://48162.livepush.myqcloud.com/live/64674994?txSecret=a4f12aeca390a6b074458c1ca2df1abf&txTime=5CC5CA8E";
+//        String rtmpUrl = "rtmp://48162.livepush.myqcloud.com/live/64674994?txSecret=c539ab8ec0e7d1f914f09cdb3d2a7297&txTime=5CC71D49";
+        String rtmpUrl = intent.getStringExtra("rtmpUrl");
+        Log.i(MyApplication.TAG, "onCreate: "+rtmpUrl);
         txLivePusher.startPusher(rtmpUrl);
         txLivePusher.startCameraPreview(txCloudVideoView);
 

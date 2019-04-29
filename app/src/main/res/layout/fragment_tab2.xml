@@ -10,11 +10,34 @@
         android:id="@+id/video_sfl"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/video_rv"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/video_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+            <LinearLayout
+                android:id="@+id/no_list_ll"
+                android:gravity="center"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+                <ImageView
+                    android:id="@+id/no_data_img"
+                    android:layout_width="220dp"
+                    android:layout_height="220dp"
+                    android:src="@drawable/no_complete"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="没有数据哟。。。"/>
+            </LinearLayout>
+        </FrameLayout>
+
     </android.support.v4.widget.SwipeRefreshLayout>
 
 
@@ -38,4 +61,6 @@
         app:rippleColor="#0097a7"
         app:pressedTranslationZ="12dp"
         android:layout_height="wrap_content" />
+
+
 </RelativeLayout>

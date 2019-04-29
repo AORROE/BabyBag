@@ -1,5 +1,6 @@
 package com.hwt.babybag.ui.act;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -70,16 +71,18 @@ public class VideoAct extends AppCompatActivity {
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE);
         Glide.with(VideoAct.this).load(R.drawable.no_complete)
                 .apply(options).into(noCompleteImg);
-
-        jzvdStd.setUp("http://video.xslease.com/live/64674994.flv",
-                "地方风味小吃——宫廷香酥牛肉饼",Jzvd.SCROLL_AXIS_NONE);
+        Intent intent = getIntent();
+        String videoUrl = intent.getStringExtra("videoUrl");
+        String videoTitle = intent.getStringExtra("videoTitle");
+        jzvdStd.setUp(videoUrl,
+                "videoTitle",Jzvd.SCROLL_AXIS_NONE);
         jzvdStd.thumbImageView.setImageResource(R.drawable.icon_header);
         jzvdStd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 JzvdStd.startFullscreen(VideoAct.this,JzvdStd.class,
                         "http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f30.mp4",
-                        "地方风味小吃——宫廷香酥牛肉饼");
+                        "videoTitle");
             }
         });
     }

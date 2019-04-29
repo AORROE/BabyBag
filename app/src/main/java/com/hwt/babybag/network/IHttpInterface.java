@@ -65,4 +65,10 @@ public interface IHttpInterface {
 
     @GET("videoList/getAllVideo")
     Observable<BaseEntity<List<VideoItem>>> getAllVideo();
+
+    @POST("videoList/addVideo")
+    Observable<BaseEntity> addVideo(@Body VideoItem params);
+
+    @POST("videoList/getRtmpUrl")
+    Observable<BaseEntity<String>> getRtmpUrl(@Body Map<String, Object> params);
 }

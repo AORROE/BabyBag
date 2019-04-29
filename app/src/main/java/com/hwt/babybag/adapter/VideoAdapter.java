@@ -26,6 +26,7 @@ public class VideoAdapter extends BaseQuickAdapter<VideoItem, BaseViewHolder> {
         helper.addOnClickListener(R.id.baby_ll_item);
 
         ImageView userHeader = helper.getView(R.id.user_photo);
+        ImageView coverImag = helper.getView(R.id.video_cover);
         if(item.getUserHeader() != null){
             Glide.with(MyApplication.getContextObj())
                     .load(item.getUserHeader())
@@ -34,6 +35,14 @@ public class VideoAdapter extends BaseQuickAdapter<VideoItem, BaseViewHolder> {
         }else {
             userHeader.setImageResource(R.drawable.icon_zhangweitu);
             item.setChoose(false);
+        }
+
+        if(item.getCoverUrl() != null){
+            Glide.with(MyApplication.getContextObj())
+                    .load(item.getCoverUrl())
+                    .into(coverImag);
+        }else {
+            coverImag.setImageResource(R.drawable.icon_zhangweitu);
         }
     }
 }

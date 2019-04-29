@@ -13,7 +13,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hwt.babybag.MyApplication;
 import com.hwt.babybag.R;
@@ -41,6 +46,8 @@ public class VideoContainerFrag extends Fragment {
     private View view;
     private GridLayoutManager layoutManager;
     private SwipeRefreshLayout video_sfl;
+    private LinearLayout no_list_ll;
+    private ImageView no_data_img;
 
     @Nullable
     @Override
@@ -51,10 +58,12 @@ public class VideoContainerFrag extends Fragment {
            view = inflater.inflate(R.layout.fragment_tab2,container,false);
        }
         rv_video = view.findViewById(R.id.video_rv);
+        no_list_ll = view.findViewById(R.id.no_list_ll);
+        no_data_img = view.findViewById(R.id.no_data_img);
         video_sfl = view.findViewById(R.id.video_sfl);
         layoutManager = new GridLayoutManager(view.getContext(),1);
-        initAdapter(view);
         initData();
+        initAdapter(view);
         return view;
     }
 
@@ -83,6 +92,24 @@ public class VideoContainerFrag extends Fragment {
      */
     private void initData(){
         list = new ArrayList<>();
+        if(getPageType() == 0){
+            getLiveData();
+        }else {
+            if(list.size() == 0){
+                no_list_ll.setVisibility(View.VISIBLE);
+                RequestOptions options = new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE);
+                Glide.with(getActivity()).load(R.drawable.no_complete)
+                        .apply(options).into(no_data_img);
+            }else {
+                no_list_ll.setVisibility(View.GONE);
+            }
+        }
+//        getLiveData();
+
+    }
+
+    private void getLiveData(){
         RetrofitFactory.getRetrofiInstace().Api()
                 .getAllVideo()
                 .subscribeOn(Schedulers.io())
@@ -132,6 +159,8 @@ public class VideoContainerFrag extends Fragment {
 //                    videoIntent = new Intent(view.getContext(), VideoAct.class);
 //                }
                 videoIntent = new Intent(view.getContext(), VideoAct.class);
+                videoIntent.putExtra("videoUrl",list.get(position).getVideoUrl());
+                videoIntent.putExtra("videoTitle",list.get(position).getVideoTitle());
                 startActivity(videoIntent);
             }
         });

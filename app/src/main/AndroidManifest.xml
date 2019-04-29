@@ -28,14 +28,14 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".ui.act.AddFoundAct"></activity>
         <activity android:name=".ui.act.Video2Act" />
-        <activity android:name=".ui.act.LivePlayAct">
+        <activity android:name=".ui.act.LivePlayAct" >
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
+             <!--<intent-filter>-->
+             <!--<action android:name="android.intent.action.MAIN" />-->
 
 
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+             <!--<category android:name="android.intent.category.LAUNCHER" />-->
+             <!--</intent-filter>-->
         </activity>
         <activity android:name=".ui.act.LiveAct" />
         <activity android:name=".ui.act.AddChildAct" />

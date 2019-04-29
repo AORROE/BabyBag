@@ -6,10 +6,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/video_rv"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/video_sfl"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/video_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 
     <android.support.design.widget.FloatingActionButton
@@ -18,7 +24,7 @@
         app:fabSize="normal"
         android:transitionName="loginFab"
         android:layout_marginTop="25dp"
-        android:layout_alignBottom="@+id/video_rv"
+        android:layout_alignBottom="@+id/video_sfl"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="20dp"
         android:layout_marginRight="20dp"

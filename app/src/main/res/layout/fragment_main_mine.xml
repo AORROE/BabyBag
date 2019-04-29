@@ -9,24 +9,27 @@
     android:layout_height="match_parent"
     tools:context=".ui.frag.BabyFrag">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/mine_rv"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/mine_srl"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/mine_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/publish_fab"
         android:layout_width="wrap_content"
         app:fabSize="normal"
         android:transitionName="loginFab"
         android:layout_marginTop="25dp"
-        android:layout_alignBottom="@+id/mine_rv"
+        android:layout_alignBottom="@+id/mine_srl"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="20dp"
         android:layout_marginRight="20dp"
-        android:src="@drawable/icon_add_light"
+        android:src="@drawable/icon_publish"
         android:clickable="true"
-
         android:layout_gravity="end|bottom"
         app:elevation="6dp"
         app:borderWidth="0dp"
@@ -34,4 +37,6 @@
         app:rippleColor="#0097a7"
         app:pressedTranslationZ="12dp"
         android:layout_height="wrap_content" />
+
+
 </RelativeLayout>

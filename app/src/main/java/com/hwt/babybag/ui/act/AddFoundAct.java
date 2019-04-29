@@ -1,7 +1,9 @@
 package com.hwt.babybag.ui.act;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -23,8 +25,13 @@ import com.hwt.babybag.bean.BaseEntity;
 import com.hwt.babybag.bean.UserInfo;
 import com.hwt.babybag.network.RetrofitFactory;
 import com.hwt.babybag.utils.ChooseImg;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.config.PictureMimeType;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -173,8 +180,8 @@ public class AddFoundAct extends AppCompatActivity implements View.OnClickListen
                     public void onNext(BaseEntity baseEntity) {
                         if(baseEntity.getStatus() == 1){
                             Toast.makeText(AddFoundAct.this,"发布成功",Toast.LENGTH_SHORT).show();
+                            setResult(1);
                             finish();
-                            setResult(0);
                         }
                     }
 

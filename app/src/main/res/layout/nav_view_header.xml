@@ -26,12 +26,5 @@
         android:textColor="#fff"
         android:textSize="18sp"/>
 
-    <TextView
-        android:id="@+id/header_work"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/nav_relationship"
-        android:textColor="#fff"
-        android:textSize="15sp"/>
 
 </LinearLayout>

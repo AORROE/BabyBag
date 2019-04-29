@@ -30,6 +30,7 @@
             android:text="@string/baby_ability"/>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/ability_ll"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="12dp"
@@ -46,4 +47,8 @@
             android:layout_marginTop="12dp"
             android:text="@string/no_data_text"/>
     </LinearLayout>
+    <com.hwt.babybag.view.radar.RadarMapView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:id="@+id/radar_map" />
 </LinearLayout>

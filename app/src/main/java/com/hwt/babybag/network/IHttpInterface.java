@@ -1,9 +1,9 @@
 package com.hwt.babybag.network;
 
 import com.hwt.babybag.adapter.MineItem;
+import com.hwt.babybag.adapter.VideoItem;
 import com.hwt.babybag.bean.BaseEntity;
 import com.hwt.babybag.bean.ChildInfoBean;
-import com.hwt.babybag.bean.FoundBean;
 import com.hwt.babybag.bean.MissionBean;
 import com.hwt.babybag.bean.UserInfo;
 
@@ -62,4 +62,7 @@ public interface IHttpInterface {
 
     @POST("found/addFound")
     Observable<BaseEntity> addFound(@Body MineItem params);
+
+    @GET("videoList/getAllVideo")
+    Observable<BaseEntity<List<VideoItem>>> getAllVideo();
 }

@@ -52,9 +52,10 @@ public class MineFrag extends Fragment implements View.OnClickListener {
     private MineAdapter mineAdapter;
     private FloatingActionButton publish_fab;
 
-    RecyclerView.LayoutManager layoutManager;
-    LinearLayout mine_ll;
-     private View view;
+    private RecyclerView.LayoutManager layoutManager;
+    private LinearLayout mine_ll;
+    private View view;
+    private SwipeRefreshLayout refreshLayout;
 
     @Nullable
     @Override
@@ -64,6 +65,7 @@ public class MineFrag extends Fragment implements View.OnClickListener {
         publish_fab = view.findViewById(R.id.publish_fab);
         publish_fab.setOnClickListener(this);
         layoutManager = new LinearLayoutManager(view.getContext());
+        refreshLayout = view.findViewById(R.id.mine_srl);
         initData(view);
 //        initAdapter(view);
         return view;
@@ -74,6 +76,24 @@ public class MineFrag extends Fragment implements View.OnClickListener {
         super.onCreate(savedInstanceState);
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        refreshLayout.setColorSchemeResources(R.color.colorBCD42,R.color.colorPrimary,R.color.colorC34A);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                rv_mine.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshList();
+                        mineAdapter.notifyDataSetChanged();
+                        refreshLayout.setRefreshing(false);
+                    }
+                },2500);
+            }
+        });
+    }
 
     private void initAdapter(View view){
         mineAdapter = new MineAdapter(R.layout.mine_item_layout,mineData);
@@ -120,9 +140,9 @@ public class MineFrag extends Fragment implements View.OnClickListener {
                             initAdapter(view);
                         }
 
-                        for (MineItem item : listBaseEntity.getResult()){
-                            Log.i(MyApplication.TAG, "onNext: "+item.toString());
-                        }
+//                        for (MineItem item : listBaseEntity.getResult()){
+//                            Log.i(MyApplication.TAG, "onNext: "+item.toString());
+//                        }
                     }
 
                     @Override
@@ -150,9 +170,10 @@ public class MineFrag extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.i(MyApplication.TAG, "onActivityResult: "+ resultCode);
+        Log.i(MyApplication.TAG, "onActivityResult: "+ requestCode);
         switch (resultCode){
-            case 0:
-                Log.i(MyApplication.TAG, "onActivityResult: "+ resultCode);
+            case 1:
                 refreshList();
                 break;
         }

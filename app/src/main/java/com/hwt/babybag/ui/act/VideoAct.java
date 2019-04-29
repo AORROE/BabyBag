@@ -71,7 +71,7 @@ public class VideoAct extends AppCompatActivity {
         Glide.with(VideoAct.this).load(R.drawable.no_complete)
                 .apply(options).into(noCompleteImg);
 
-        jzvdStd.setUp("http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f30.mp4",
+        jzvdStd.setUp("http://video.xslease.com/live/64674994.flv",
                 "地方风味小吃——宫廷香酥牛肉饼",Jzvd.SCROLL_AXIS_NONE);
         jzvdStd.thumbImageView.setImageResource(R.drawable.icon_header);
         jzvdStd.setOnClickListener(new View.OnClickListener() {

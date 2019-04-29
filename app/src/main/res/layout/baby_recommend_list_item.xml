@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:src="@drawable/icon_header"
-            android:scaleType="centerCrop"
+            android:scaleType="fitCenter"
             app:corner_radius="10dp"/>
         <ImageView
             android:layout_width="40dp"
@@ -39,11 +39,41 @@
                 android:text="学前1班"/>
         </RelativeLayout>
     </FrameLayout>
-    <TextView
-        android:layout_marginTop="10dp"
-        android:id="@+id/video_introduce"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/text_size"
-        android:text="学前1班学前1班学前1班学前1班学前1班学前1班"/>
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.hwt.babybag.view.CircleImageVIew
+            android:id="@+id/user_photo"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/icon_zhangweitu"
+            android:scaleType="fitCenter"
+            app:corner_radius="10dp"
+            app:is_circle="true"/>
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_marginLeft="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size"
+                android:textColor="@color/text_color"/>
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/video_introduce"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size"
+                android:textColor="@color/text_color"/>
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

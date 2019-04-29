@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -37,6 +38,8 @@ import com.hwt.babybag.bean.ChildInfoBean;
 import com.hwt.babybag.bean.UserInfo;
 import com.hwt.babybag.network.RetrofitFactory;
 import com.hwt.babybag.utils.ChooseChildDialog;
+import com.hwt.babybag.view.radar.RadarMapData;
+import com.hwt.babybag.view.radar.RadarMapView;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -57,7 +60,7 @@ import io.reactivex.schedulers.Schedulers;
 public class BabyFrag extends Fragment {
 
     private RecyclerView rv_video;
-    private LinearLayout ll_noData;
+    private LinearLayout ll_noData,ability_ll;
     private List<VideoItem> list;
     private VideoAdapter myAdapter;
 
@@ -71,21 +74,23 @@ public class BabyFrag extends Fragment {
     private UserInfo user;
     private ChildInfoBean childs;
     private List<ChildInfoBean> childList;
+    private View view;
 
+    private RadarMapView radarMapView;
+    private RadarMapView radarMapView2;
+    private RadarMapData radarMapData;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_main_baby,container,false);
+        view = inflater.inflate(R.layout.fragment_main_baby,container,false);
         IntentFilter filter = new IntentFilter();
         filter.addAction("action.refreshChilds");
         container.getContext().registerReceiver(refreshReceiver,filter);
         initView(view);
         getUserInfo();
         initData();
-        myAdapter = new VideoAdapter(R.layout.baby_recommend_list_item,list);
-        GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(),2);
-        rv_video.setLayoutManager(layoutManager);
-        rv_video.setAdapter(myAdapter);
+        initAbility();
+        initStudy();
         return view;
     }
 
@@ -97,6 +102,7 @@ public class BabyFrag extends Fragment {
     private void initView(View view){
         rv_video = view.findViewById(R.id.baby_rv);
         ll_noData = view.findViewById(R.id.ll_no_data_view);
+        ability_ll = view.findViewById(R.id.ability_ll);
         child_change = view.findViewById(R.id.child_change);
         childName = view.findViewById(R.id.child_name_value);
         age = view.findViewById(R.id.child_age_value);
@@ -115,34 +121,79 @@ public class BabyFrag extends Fragment {
         });
     }
 
+    private void initAbility(){
+        radarMapView = view.findViewById(R.id.radar_map);
+        radarMapData=new RadarMapData();
+        ability_ll.setVisibility(View.GONE);
+        radarMapData.setCount(6);
+        radarMapData.setMainPaintColor(Color.parseColor("#009688"));
+        radarMapData.setTitles(new String[]{"书法","身体素质", "语言" , "数学能力","艺术设计" , "交流"});
+        radarMapData.setValuse(new Double[]{25.0,67.8,55.4,89.0,36.9,70.0});
+        radarMapData.setTextSize(30);
+        radarMapView.setData(radarMapData);
+    }
+    private void initStudy(){
+        radarMapView2 = view.findViewById(R.id.radar_map2);
+        radarMapData=new RadarMapData();
+        radarMapData.setCount(4);
+        radarMapData.setMainPaintColor(Color.parseColor("#009688"));
+        radarMapData.setTitles(new String[]{"玩耍与探索","自主学习", "个性创作","认真思考" });
+        radarMapData.setValuse(new Double[]{20.0,70.0,40.8,50.0});
+        radarMapData.setTextSize(30);
+        radarMapView2.setData(radarMapData);
+    }
 
     /**
      * 添加数据源
      */
     private void initData(){
         list = new ArrayList<>();
-        list.add(new VideoItem(
-                BitmapFactory.decodeResource(getResources(),R.drawable.icon_header),
-                "学前222班","很厉害的一个班"
-        ));
-        list.add(new VideoItem(
-                BitmapFactory.decodeResource(getResources(),R.drawable.icon_header),
-                "学前333班","很厉害的一个班"
-        ));
-        list.add(new VideoItem(
-                BitmapFactory.decodeResource(getResources(),R.drawable.icon_header),
-                "学前1111班","很厉害的一个班"
-        ));
-        list.add(new VideoItem(
-                BitmapFactory.decodeResource(getResources(),R.drawable.icon_header),
-                "学前444班","很厉害的一个班"
-        ));
+        RetrofitFactory.getRetrofiInstace().Api()
+                .getAllVideo()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BaseEntity<List<VideoItem>>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-        if(list.size() == 0){
-            ll_noData.setVisibility(View.VISIBLE);
-        }else {
-            ll_noData.setVisibility(View.GONE);
-        }
+                    }
+
+                    @Override
+                    public void onNext(BaseEntity<List<VideoItem>> listBaseEntity) {
+                        if(listBaseEntity.getStatus() == 1){
+
+                            List<VideoItem> data = new ArrayList<>();
+                            for (VideoItem item : list){
+                                Log.i(MyApplication.TAG, "item :"+item.toString());
+                            }
+                            for (int i = 0 ; i <listBaseEntity.getResult().size();i++){
+                                if(i < 4){
+                                    data.add(listBaseEntity.getResult().get(i));
+                                }
+                            }
+                            list = data;
+                            myAdapter = new VideoAdapter(R.layout.baby_recommend_list_item,list);
+                            GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(),2);
+                            rv_video.setLayoutManager(layoutManager);
+                            rv_video.setAdapter(myAdapter);
+                            if(list.size() == 0){
+                                ll_noData.setVisibility(View.VISIBLE);
+                            }else {
+                                ll_noData.setVisibility(View.GONE);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     /**
@@ -178,6 +229,9 @@ public class BabyFrag extends Fragment {
         }
         chooseChildDialog.setCannotBackPress();
         chooseChildDialog.show();
+        radarMapData.setValuse(new Double[]{0.0,0.0,0.0,0.0});
+        radarMapView2.setData(radarMapData);
+        radarMapView2.start();
     }
 
     private void getUserInfo(){

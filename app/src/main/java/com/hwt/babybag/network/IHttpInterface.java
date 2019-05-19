@@ -47,11 +47,14 @@ public interface IHttpInterface {
     @POST("application/commitApplication")
     Observable<BaseEntity> commitApplication(@Body Map<String,Object> params);
 
-    @POST("mission/getAllMission")
-    Observable<BaseEntity<List<MissionBean>>> getAllMission(@Body Map<String,Object> params);
+    @GET("mission/getAllMission")
+    Observable<BaseEntity<List<MissionBean>>> getAllMission();
 
     @POST("mission/modifyComplete")
     Observable<BaseEntity> modifyComplete(@Body Map<String,Object> params);
+
+    @POST("mission/modifyParise")
+    Observable<BaseEntity> modifyParise(@Body Map<String,Object> params);
 
     @Multipart
     @POST("user/uploadImg")
@@ -63,8 +66,8 @@ public interface IHttpInterface {
     @POST("found/addFound")
     Observable<BaseEntity> addFound(@Body MineItem params);
 
-    @GET("videoList/getAllVideo")
-    Observable<BaseEntity<List<VideoItem>>> getAllVideo();
+    @POST("videoList/getAllVideo")
+    Observable<BaseEntity<List<VideoItem>>> getAllVideo(@Body Map<String, Object> params);
 
     @POST("videoList/addVideo")
     Observable<BaseEntity> addVideo(@Body VideoItem params);

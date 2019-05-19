@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hwt.babybag.MyApplication;
@@ -37,6 +38,7 @@ import com.hwt.babybag.bean.BaseEntity;
 import com.hwt.babybag.bean.ChildInfoBean;
 import com.hwt.babybag.bean.UserInfo;
 import com.hwt.babybag.network.RetrofitFactory;
+import com.hwt.babybag.ui.act.VideoAct;
 import com.hwt.babybag.utils.ChooseChildDialog;
 import com.hwt.babybag.view.radar.RadarMapData;
 import com.hwt.babybag.view.radar.RadarMapView;
@@ -128,7 +130,7 @@ public class BabyFrag extends Fragment {
         radarMapData.setCount(6);
         radarMapData.setMainPaintColor(Color.parseColor("#009688"));
         radarMapData.setTitles(new String[]{"书法","身体素质", "语言" , "数学能力","艺术设计" , "交流"});
-        radarMapData.setValuse(new Double[]{25.0,67.8,55.4,89.0,36.9,70.0});
+        radarMapData.setValuse(new Double[]{21.0,30.5,50.4,9.0,36.9,60.0});
         radarMapData.setTextSize(30);
         radarMapView.setData(radarMapData);
     }
@@ -138,7 +140,7 @@ public class BabyFrag extends Fragment {
         radarMapData.setCount(4);
         radarMapData.setMainPaintColor(Color.parseColor("#009688"));
         radarMapData.setTitles(new String[]{"玩耍与探索","自主学习", "个性创作","认真思考" });
-        radarMapData.setValuse(new Double[]{20.0,70.0,40.8,50.0});
+        radarMapData.setValuse(new Double[]{4.0,70.0,40.8,20.0});
         radarMapData.setTextSize(30);
         radarMapView2.setData(radarMapData);
     }
@@ -148,8 +150,10 @@ public class BabyFrag extends Fragment {
      */
     private void initData(){
         list = new ArrayList<>();
+        HashMap<String,Object> params = new HashMap<>();
+        params.put("userId",user.getUserId());
         RetrofitFactory.getRetrofiInstace().Api()
-                .getAllVideo()
+                .getAllVideo(params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BaseEntity<List<VideoItem>>>() {
@@ -172,15 +176,7 @@ public class BabyFrag extends Fragment {
                                 }
                             }
                             list = data;
-                            myAdapter = new VideoAdapter(R.layout.baby_recommend_list_item,list);
-                            GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(),2);
-                            rv_video.setLayoutManager(layoutManager);
-                            rv_video.setAdapter(myAdapter);
-                            if(list.size() == 0){
-                                ll_noData.setVisibility(View.VISIBLE);
-                            }else {
-                                ll_noData.setVisibility(View.GONE);
-                            }
+                            initAdapter();
                         }
                     }
 
@@ -196,6 +192,27 @@ public class BabyFrag extends Fragment {
                 });
     }
 
+    private void initAdapter(){
+        myAdapter = new VideoAdapter(R.layout.baby_recommend_list_item,list);
+        GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(),2);
+        rv_video.setLayoutManager(layoutManager);
+        rv_video.setAdapter(myAdapter);
+        if(list.size() == 0){
+            ll_noData.setVisibility(View.VISIBLE);
+        }else {
+            ll_noData.setVisibility(View.GONE);
+        }
+        myAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent videoIntent;
+                videoIntent = new Intent(view.getContext(), VideoAct.class);
+                videoIntent.putExtra("videoUrl",list.get(position).getVideoUrl());
+                videoIntent.putExtra("videoTitle",list.get(position).getVideoTitle());
+                startActivity(videoIntent);
+            }
+        });
+    }
     /**
      * 选择孩子弹框
      * @param view

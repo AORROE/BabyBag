@@ -29,6 +29,7 @@ import com.hwt.babybag.bean.FoundBean;
 import com.hwt.babybag.bean.MissionBean;
 import com.hwt.babybag.network.RetrofitFactory;
 import com.hwt.babybag.ui.act.AddFoundAct;
+import com.hwt.babybag.ui.act.MineDetailAct;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -106,7 +107,9 @@ public class MineFrag extends Fragment implements View.OnClickListener {
             public void onItemChildClick(BaseQuickAdapter adapter, View v, int position) {
                 switch (v.getId()){
                     case R.id.mine_ll:
-                        Toast.makeText(getContext(),"test",Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getActivity(), MineDetailAct.class);
+                        intent.putExtra("MineDetail",mineData.get(position));
+                        startActivity(intent);
                         break;
                     case R.id.icon_comment:
                     case R.id.comment_ll:

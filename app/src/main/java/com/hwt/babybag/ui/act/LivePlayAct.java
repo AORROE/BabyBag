@@ -86,4 +86,10 @@ public class LivePlayAct extends AppCompatActivity implements View.OnClickListen
         txLivePushConfig.setHomeOrientation(pushRotation);
         txLivePusher.setConfig(txLivePushConfig);
     }
+
+    @Override
+    protected void onDestroy() {
+        txLivePusher.stopPusher();
+        super.onDestroy();
+    }
 }

@@ -55,7 +55,8 @@ public class LiveAct extends AppCompatActivity implements View.OnClickListener {
         this.rtmpUrl2 = rtmpUrl2;
     }
 
-
+    Map<String ,Object> params;
+    private String streamId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +67,13 @@ public class LiveAct extends AppCompatActivity implements View.OnClickListener {
         icon_menu.setOnClickListener(this);
         cover_img.setOnClickListener(this);
         start_live.setOnClickListener(this);
+        SharedPreferences sp = getSharedPreferences("UserPreferences",MODE_PRIVATE);
+        int userId = sp.getInt("userId",0);
+        streamId = "6666123"+userId;
+        Log.i(MyApplication.TAG, "onCreate: "+streamId);
+        params = new HashMap<>();
+        params.put("streamId",streamId);
+        params.put("endTime",1557673732);
     }
 
     @Override
@@ -93,6 +101,11 @@ public class LiveAct extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
+    /**
+     * 添加直播地址到数据库中
+     * @param rtmpUrl
+     * @param streamId
+     */
     private void addLive(String rtmpUrl,String streamId){
 
         VideoItem params = new VideoItem();
@@ -138,12 +151,10 @@ public class LiveAct extends AppCompatActivity implements View.OnClickListener {
                 });
     }
 
-
+    /**
+     * 获取推流地址
+     */
     private void getRtmpUrl(){
-        Map<String ,Object> params = new HashMap<>();
-        params.put("streamId","66661234");
-        params.put("endTime",1556553033);
-
         RetrofitFactory.getRetrofiInstace().Api()
                 .getRtmpUrl(params)
                 .subscribeOn(Schedulers.io())
@@ -160,7 +171,7 @@ public class LiveAct extends AppCompatActivity implements View.OnClickListener {
                             setRtmpUrl2(stringBaseEntity.getResult());
                             Log.i(MyApplication.TAG, "onNext:111 "+stringBaseEntity.getResult());
                         }
-                        addLive(stringBaseEntity.getResult(),"66661234");
+                        addLive(stringBaseEntity.getResult(),streamId);
                     }
 
                     @Override

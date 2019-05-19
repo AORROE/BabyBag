@@ -64,8 +64,8 @@ public class PersonInfoAct extends AppCompatActivity implements View.OnClickList
     public LinearLayout user_nickname_ll;
     @BindView(R.id.user_sex_ll)
     public LinearLayout user_sex_ll;
-    @BindView(R.id.user_birthday_ll)
-    public LinearLayout user_birthday_ll;
+//    @BindView(R.id.user_birthday_ll)
+//    public LinearLayout user_birthday_ll;
     @BindView(R.id.user_sign_ll)
     public LinearLayout user_sign_ll;
     @BindView(R.id.save_user_info)
@@ -114,7 +114,7 @@ public class PersonInfoAct extends AppCompatActivity implements View.OnClickList
         user_avatar_ll.setOnClickListener(this);
         user_nickname_ll.setOnClickListener(this);
         user_sex_ll.setOnClickListener(this);
-        user_birthday_ll.setOnClickListener(this);
+//        user_birthday_ll.setOnClickListener(this);
         user_sign_ll.setOnClickListener(this);
         saveText.setOnClickListener(this);
         save_user_info.setOnClickListener(this);
@@ -189,8 +189,8 @@ public class PersonInfoAct extends AppCompatActivity implements View.OnClickList
                 dialog.setCannotBackPress();
                 dialog.show();
                 break;
-            case R.id.user_birthday_ll:
-                break;
+//            case R.id.user_birthday_ll:
+//                break;
             case R.id.user_sign_ll:
                 break;
             case R.id.right_text:

@@ -1,8 +1,9 @@
 package com.hwt.babybag.adapter;
 
-import android.graphics.Bitmap;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class MineItem {
+public class MineItem implements Parcelable {
 
     private Integer foundId;
     private Integer userId;
@@ -114,4 +115,48 @@ public class MineItem {
                 ", isCheck=" + isCheck +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.foundId);
+        dest.writeValue(this.userId);
+        dest.writeValue(this.commentId);
+        dest.writeString(this.userName);
+        dest.writeString(this.userPhoto);
+        dest.writeString(this.foundContent);
+        dest.writeString(this.foundImg);
+        dest.writeString(this.addTime);
+        dest.writeInt(this.isPraise);
+        dest.writeValue(this.isCheck);
+    }
+
+    protected MineItem(Parcel in) {
+        this.foundId = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.userId = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.commentId = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.userName = in.readString();
+        this.userPhoto = in.readString();
+        this.foundContent = in.readString();
+        this.foundImg = in.readString();
+        this.addTime = in.readString();
+        this.isPraise = in.readInt();
+        this.isCheck = (Boolean) in.readValue(Boolean.class.getClassLoader());
+    }
+
+    public static final Creator<MineItem> CREATOR = new Creator<MineItem>() {
+        @Override
+        public MineItem createFromParcel(Parcel source) {
+            return new MineItem(source);
+        }
+
+        @Override
+        public MineItem[] newArray(int size) {
+            return new MineItem[size];
+        }
+    };
 }

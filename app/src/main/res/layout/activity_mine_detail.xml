@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.act.MineDetailAct">
+
+    <include
+        layout="@layout/activity_nav_tools_bar"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:background="@color/white"
+            android:id="@+id/detail_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/ll"/>
+        <LinearLayout
+            android:id="@+id/ll"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
+            <EditText
+                android:id="@+id/child_instruction_et"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:textSize="@dimen/text_size"
+                android:textColor="@color/text_color"
+                android:textCursorDrawable="@drawable/cursor_color"
+                android:hint="请输入孩子的性格特点"/>
+            <Button
+                android:id="@+id/send_comment"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:background="@drawable/complete_shap"
+                android:textColor="@color/white"
+                android:text="发送"/>
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

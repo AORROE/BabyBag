@@ -1,6 +1,7 @@
 package com.hwt.babybag.adapter;
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -10,9 +11,17 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hwt.babybag.MyApplication;
 import com.hwt.babybag.R;
+import com.hwt.babybag.bean.BaseEntity;
 import com.hwt.babybag.bean.MissionBean;
+import com.hwt.babybag.network.RetrofitFactory;
 
+import java.util.HashMap;
 import java.util.List;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class MissionAdapter extends BaseQuickAdapter<MissionBean, BaseViewHolder> {
 
@@ -69,6 +78,7 @@ public class MissionAdapter extends BaseQuickAdapter<MissionBean, BaseViewHolder
                     item.setIscheck(false);
                     item.setIsParise(0);
                 }
+                modifyParise(item.getId());
             }
         });
 
@@ -83,5 +93,15 @@ public class MissionAdapter extends BaseQuickAdapter<MissionBean, BaseViewHolder
 
     public interface OnItemPraiseListener{
         void onPraiseClick(ImageView praise);
+    }
+
+    private void modifyParise(int id){
+        HashMap<String,Object> params = new HashMap<>();
+        params.put("id",id);
+        RetrofitFactory.getRetrofiInstace().Api()
+                .modifyParise(params)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 }

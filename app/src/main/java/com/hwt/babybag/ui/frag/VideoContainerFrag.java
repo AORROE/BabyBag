@@ -1,6 +1,8 @@
 package com.hwt.babybag.ui.frag;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,6 +31,7 @@ import com.hwt.babybag.network.RetrofitFactory;
 import com.hwt.babybag.ui.act.VideoAct;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.Observer;
@@ -109,9 +112,16 @@ public class VideoContainerFrag extends Fragment {
 
     }
 
+    /**
+     * 获取直播视频播放地址
+     */
     private void getLiveData(){
+        SharedPreferences sp = getContext().getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
+        int userId = sp.getInt("userId",0);
+        HashMap<String,Object> params = new HashMap<>();
+        params.put("userId",userId);
         RetrofitFactory.getRetrofiInstace().Api()
-                .getAllVideo()
+                .getAllVideo(params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BaseEntity<List<VideoItem>>>() {

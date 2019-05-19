@@ -25,9 +25,9 @@ public class RadarMapView extends View {
     private Double[] values={25.0,67.8,55.4,89.0,56.9,70.0};
     private Double[] temValuses={0.0,0.0,0.0,0.0,0.0,0.0};
     private float maxValue=100;//数据最大值
-    private float mDuration=1000;//动画时长
-    private float mCount=100;//分多少次运动
-    private float mCurrent = 100;   // 当前已进行时长
+    private float mDuration=100;//动画时长
+    private float mCount=10;//分多少次运动
+    private float mCurrent =20;   // 当前已进行时长
     private float mPiece = mDuration/mCount; // 每一份的时长
     public RadarMapView(Context context) {
         this(context,null);

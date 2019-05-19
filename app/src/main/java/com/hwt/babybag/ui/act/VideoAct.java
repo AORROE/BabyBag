@@ -7,6 +7,7 @@ import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -23,6 +24,7 @@ import com.bumptech.glide.load.resource.gif.GifDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.hwt.babybag.MyApplication;
 import com.hwt.babybag.R;
 import com.hwt.babybag.view.IJklayerVideoView;
 import com.hwt.babybag.view.VideoListener;
@@ -40,10 +42,6 @@ import tv.danmaku.ijk.media.player.IMediaPlayer;
 public class VideoAct extends AppCompatActivity {
     private JzvdStd jzvdStd;
     private ImageView noCompleteImg;
-
-    private IJklayerVideoView videoView;
-
-    private TXCloudVideoView txCloudVideoView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,15 +72,16 @@ public class VideoAct extends AppCompatActivity {
         Intent intent = getIntent();
         String videoUrl = intent.getStringExtra("videoUrl");
         String videoTitle = intent.getStringExtra("videoTitle");
-        jzvdStd.setUp(videoUrl,
-                "videoTitle",Jzvd.SCROLL_AXIS_NONE);
+        Log.i(MyApplication.TAG, "videoView: "+videoUrl);
+        jzvdStd.setUp("http://video.xslease.com/live/66661239.flv",
+                videoTitle,Jzvd.SCROLL_AXIS_NONE);
         jzvdStd.thumbImageView.setImageResource(R.drawable.icon_header);
         jzvdStd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 JzvdStd.startFullscreen(VideoAct.this,JzvdStd.class,
-                        "http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f30.mp4",
-                        "videoTitle");
+                        videoUrl,
+                        videoTitle);
             }
         });
     }

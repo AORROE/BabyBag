@@ -14,7 +14,7 @@ public class RetrofitFactory {
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.202.1.93:8080/api/")
+                .baseUrl("http://192.168.43.154:8080/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(client)

@@ -102,10 +102,8 @@ public class MissionFrag extends Fragment {
      */
     private void initData(final View view){
         missionData = new ArrayList<>();
-        HashMap<String,Object> params = new HashMap<>();
-        params.put("userId",userId);
         RetrofitFactory.getRetrofiInstace().Api()
-                .getAllMission(params)
+                .getAllMission()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BaseEntity<List<MissionBean>>>() {
@@ -188,10 +186,8 @@ public class MissionFrag extends Fragment {
     }
 
     private void onRefreshData(){
-        HashMap<String,Object> params = new HashMap<>();
-        params.put("userId",userId);
         RetrofitFactory.getRetrofiInstace().Api()
-                .getAllMission(params)
+                .getAllMission()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BaseEntity<List<MissionBean>>>() {

@@ -2,8 +2,6 @@ package com.hwt.babybag.adapter;
 
 import android.graphics.Bitmap;
 
-import com.hwt.babybag.test.Item;
-
 public class MissionItem {
     private Bitmap userHeader;
     private String userName;
